@@ -48,7 +48,7 @@ nasa.api.password=YOUR_SPACETRACK_PASSWORD
 
 Backend will start on http://localhost:8080
 
-**⚠️ Keep this terminal running**
+** KEEP THIS TERMINAL RUNNING **
 
 ## Frontend Setup
 
@@ -69,7 +69,7 @@ npm start
 
 The frontend will start on http://localhost:3000 and automatically open in your browser.
 
-**⚠️ Keep both terminals running**
+** Keep both terminals running **
 
 ## Verification
 
