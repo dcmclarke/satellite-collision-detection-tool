@@ -6,17 +6,17 @@ Node.js 18+ and npm
 PostgreSQL 18
 Space-Track.org account (free registration at https://www.space-track.org/auth/createAccount)
 
-Backup Setup
+# Backup Setup
 
-1. Configure Database
-Create PostgreSQL database
+### 1. Configure Database
+- Create PostgreSQL database
 
 psql -U postgres
-CREATE DATABASE satellitedb;
+- CREATE DATABASE satellitedb;
 \q
 
-2. Configure Application properties
-Copy example configuration:
+### 2. Configure Application properties
+- Copy example configuration:
 
 cd backend
 cp src/main/resources/application-example.properties src/main/resources/application.properties
@@ -27,27 +27,27 @@ spring.datasource.password=YOUR_POSTGRES_PASSWORD
 nasa.api.username=YOUR_SPACETRACK_USERNAME
 nasa.api.password=YOUR_SPACETRACK_PASSWORD
 
-3. Start backend (terminal 1)
+### 3. Start backend (terminal 1)
 
 ./mvnw spring-boot:run
 
 Backend will start on http://localhost:8080
 KEEP THIS RUNNING
 
-Frontend Setup
+# **Frontend Setup**
 
-New terminal/window for frontend
-1. Install Dependencies
+- New terminal/window for frontend
+### 1. Install Dependencies
 cd satellite-collision-detection-project/frotend
 npm install
 
-2. Start Frontend (terminal 2)
+### 2. Start Frontend (terminal 2)
 npm start
 
 Then frontend will start on http://localhost:3000 and automatically open in browser
 Keep both terminals running.
 
-Verfication
+## Verfication
 1. Navigate to http://localhost:3000
 2.  Click Fetch Nasa Data 
 3. Click "Run Collision Detection"
