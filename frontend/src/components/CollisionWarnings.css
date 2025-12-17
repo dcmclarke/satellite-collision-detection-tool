@@ -1,0 +1,206 @@
+.collision-warnings {
+  padding: 20px;
+  max-width: 2200px;
+  margin: 0 auto;
+}
+
+.collision-warnings .message {
+  text-align: left !important;
+}
+
+.collision-warnings h1 {
+  color: #000000;
+  margin-bottom: 24px;
+  font-size: 28px;
+}
+
+/* filter tabs */
+.filter-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.filter-tabs button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  margin: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 15px;
+  transition: background-color 0.2s;
+}
+
+.filter-tabs button:hover {
+  background-color: #1e40af;
+}
+
+.filter-tabs button.active {
+  background-color: #1e3a8a;
+  font-weight: 600;
+}
+
+.collision-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));
+  max-width: 100%;
+}
+
+/* collision card */
+.collision-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-left: 7px solid #94a3b8;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.collision-card:hover {
+  transform: translateX(3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.collision-card.critical {
+  border-left-color: #dc2626;
+  background-color: #fef2f2;
+}
+
+.collision-card.warning {
+  border-left-color: #f59e0b;
+  background-color: #fffbeb;
+}
+
+.collision-card.info {
+  border-left-color: #3b82f6;
+  background-color: #eff6ff;
+}
+
+/* card header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  gap: 8px;
+}
+
+.risk-badge {
+  background-color: #94a3b8;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  white-space: nowrap;
+}
+
+.critical .risk-badge {
+  background-color: #dc2626;
+}
+
+.warning .risk-badge {
+  background-color: #f59e0b;
+}
+
+.info .risk-badge {
+  background-color: #3b82f6;
+}
+
+.distance {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e3a8a;
+  white-space: nowrap;
+}
+
+/* card body */
+.card-body h3 {
+  color: #1a1a1a;
+  font-size: 17px;
+  margin: 0 0 10px 0;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  gap: 8px;
+}
+
+.detail-label {
+  color: #64748b;
+  font-weight: 500;
+  flex: 0 0 auto;
+}
+
+.detail-value {
+  color: #1a1a1a;
+  font-weight: 600;
+  text-align: right;
+  flex: 1;
+}
+/* messages */
+.message {
+  background-color: #f0fdf4;
+  border-left: 4px solid #10b981;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  border-radius: 4px;
+  color: #065f46;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: left !important;
+  display: block !important;
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  max-width: none !important;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #3b82f6;
+  font-size: 17px;
+}
+
+.no-data {
+  text-align: center;
+  padding: 40px;
+  color: #64748b;
+  font-size: 16px;
+}
+
+.count {
+  margin-top: 16px;
+  color: #64748b;
+  font-size: 15px;
+  text-align: left;
+}
+
+@media (max-width: 1800px) {
+  .collision-grid {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .collision-grid {
+    grid-template-columns: 1fr;
+  }
+}
