@@ -102,7 +102,7 @@ Key features:
 **1. Clone the repository**
 
 ```sh
-git clone https://github.com/YOUR_USERNAME/satellite-collision-detection.git
+git clone https://github.com/dcmclarke/satellite-collision-detection.git
 cd satellite-collision-detection
 ```
 
