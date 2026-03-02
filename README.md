@@ -312,16 +312,16 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 ---
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[contributors-shield]: https://img.shields.io/github/contributors/YOUR_USERNAME/satellite-collision-detection.svg?style=for-the-badge
-[contributors-url]: https://github.com/YOUR_USERNAME/satellite-collision-detection/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/YOUR_USERNAME/satellite-collision-detection.svg?style=for-the-badge
-[forks-url]: https://github.com/YOUR_USERNAME/satellite-collision-detection/network/members
-[stars-shield]: https://img.shields.io/github/stars/YOUR_USERNAME/satellite-collision-detection.svg?style=for-the-badge
-[stars-url]: https://github.com/YOUR_USERNAME/satellite-collision-detection/stargazers
-[issues-shield]: https://img.shields.io/github/issues/YOUR_USERNAME/satellite-collision-detection.svg?style=for-the-badge
-[issues-url]: https://github.com/YOUR_USERNAME/satellite-collision-detection/issues
-[license-shield]: https://img.shields.io/github/license/YOUR_USERNAME/satellite-collision-detection.svg?style=for-the-badge
-[license-url]: https://github.com/YOUR_USERNAME/satellite-collision-detection/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/dcmclarke/satellite-collision-detection.svg?style=for-the-badge
+[contributors-url]: https://github.com/dcmclarke/satellite-collision-detection/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/dcmclarke/satellite-collision-detection.svg?style=for-the-badge
+[forks-url]: https://github.com/dcmclarke/satellite-collision-detection/network/members
+[stars-shield]: https://img.shields.io/github/stars/dcmclarke/satellite-collision-detection.svg?style=for-the-badge
+[stars-url]: https://github.com/dcmclarke/satellite-collision-detection/stargazers
+[issues-shield]: https://img.shields.io/github/issues/dcmclarke/satellite-collision-detection.svg?style=for-the-badge
+[issues-url]: https://github.com/dcmclarke/satellite-collision-detection/issues
+[license-shield]: https://img.shields.io/github/license/dcmclarke/satellite-collision-detection.svg?style=for-the-badge
+[license-url]: https://github.com/dcmclarke/satellite-collision-detection/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/dc-clarke/
 
