@@ -102,8 +102,8 @@ Key features:
 **1. Clone the repository**
 
 ```sh
-git clone https://github.com/dcmclarke/satellite-collision-detection.git
-cd satellite-collision-detection
+git clone https://github.com/dcmclarke/satellite-collision-detection-tool.git
+cd satellite-collision-detection-tool
 ```
 
 **2. Set up the database**
@@ -204,7 +204,7 @@ With 500 satellites loaded, the system evaluates ~125,000 unique pairs per detec
 ## Project Structure
 
 ```
-satellite-collision-detection/
+satellite-collision-detection-tool/
 ├── backend/
 │   └── src/main/java/com/satellitesystem/collisiondetection/
 │       ├── controller/         # REST endpoints (Satellite, Collision, Alert)
@@ -312,16 +312,16 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 ---
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[contributors-shield]: https://img.shields.io/github/contributors/dcmclarke/satellite-collision-detection.svg?style=for-the-badge
-[contributors-url]: https://github.com/dcmclarke/satellite-collision-detection/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/dcmclarke/satellite-collision-detection.svg?style=for-the-badge
-[forks-url]: https://github.com/dcmclarke/satellite-collision-detection/network/members
-[stars-shield]: https://img.shields.io/github/stars/dcmclarke/satellite-collision-detection.svg?style=for-the-badge
-[stars-url]: https://github.com/dcmclarke/satellite-collision-detection/stargazers
-[issues-shield]: https://img.shields.io/github/issues/dcmclarke/satellite-collision-detection.svg?style=for-the-badge
-[issues-url]: https://github.com/dcmclarke/satellite-collision-detection/issues
-[license-shield]: https://img.shields.io/github/license/dcmclarke/satellite-collision-detection.svg?style=for-the-badge
-[license-url]: https://github.com/dcmclarke/satellite-collision-detection/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/dcmclarke/satellite-collision-detection-tool.svg?style=for-the-badge
+[contributors-url]: https://github.com/dcmclarke/satellite-collision-detection-tool/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/dcmclarke/satellite-collision-detection-tool.svg?style=for-the-badge
+[forks-url]: https://github.com/dcmclarke/satellite-collision-detection-tool/network/members
+[stars-shield]: https://img.shields.io/github/stars/dcmclarke/satellite-collision-detection-tool.svg?style=for-the-badge
+[stars-url]: https://github.com/dcmclarke/satellite-collision-detection-tool/stargazers
+[issues-shield]: https://img.shields.io/github/issues/dcmclarke/satellite-collision-detection-tool.svg?style=for-the-badge
+[issues-url]: https://github.com/dcmclarke/satellite-collision-detection-tool/issues
+[license-shield]: https://img.shields.io/github/license/dcmclarke/satellite-collision-detection-tool.svg?style=for-the-badge
+[license-url]: https://github.com/dcmclarke/satellite-collision-detection-tool/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/dc-clarke/
 
