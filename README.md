@@ -45,7 +45,7 @@
 
 ## About The Project
 
-[![Satellites Page][screenshot-satellites]](images/screenshot-satellites.png)
+<img width="1262" height="642" alt="image" src="https://github.com/user-attachments/assets/4dffb180-8113-4713-ae7b-45346092c7f4" />
 
 A full-stack satellite collision detection system built as a final project for an HDip in Software Development. The system fetches live orbital data for 500+ satellites from NASA's Space-Track.org API, runs proximity-based collision detection across every satellite pair, and surfaces warnings through a React dashboard.
 
@@ -59,7 +59,7 @@ Key features:
 - Backup dataset for offline demo / presentation use
 - Sortable, searchable satellite table
 
-[![Collision Warnings Page][screenshot-warnings]](images/screenshot-warnings.png)
+<img width="901" height="788" alt="image" src="https://github.com/user-attachments/assets/7f797af5-c4e1-4a2f-abea-dba92d2ebfd3" />
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
