@@ -36,7 +36,6 @@
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
@@ -47,7 +46,7 @@
 
 <img width="1262" height="642" alt="image" src="https://github.com/user-attachments/assets/4dffb180-8113-4713-ae7b-45346092c7f4" />
 
-A full-stack satellite collision detection system built as a final project for an HDip in Software Development. The system fetches live orbital data for 500+ satellites from NASA's Space-Track.org API, runs proximity-based collision detection across every satellite pair, and surfaces warnings through a React dashboard.
+A full-stack satellite collision detection system built as a final project while learning full-stack development for an HDip in Software Development. The system fetches live orbital data for 500+ satellites from NASA's Space-Track.org API, runs proximity-based collision detection across every satellite pair, and surfaces warnings through a React dashboard.
 
 Key features:
 
@@ -194,6 +193,8 @@ distance = √((x₂-x₁)² + (y₂-y₁)² + (z₂-z₁)²)
 | 🔴 CRITICAL | < 2 km | 90% |
 | 🟡 WARNING | 2 – 3.5 km | 60% |
 | 🔵 INFO | 3.5 – 5 km | 30% |
+
+Note: This uses simplified 3D distance calculations. Production systems would use SGP4 orbital propagation for higher accuracy.
 
 With 500 satellites loaded, the system evaluates ~125,000 unique pairs per detection run.
 
