@@ -159,7 +159,7 @@ The app will open automatically at `http://localhost:3000`.
 3. Navigate to **Warnings** to view collision predictions filtered by risk level
 4. Navigate to **Alerts** to review and acknowledge alerts
 
-> **Note:** If the Space-Track API is unavailable (e.g. during a presentation), use **Load Backup Data**. It includes satellites in similar LEO orbits chosen specifically to demonstrate collision detection.
+> **Note:** If the Space-Track API is unavailable, use **Load Backup Data**. It includes satellites in similar LEO orbits chosen specifically to demonstrate collision detection.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -300,16 +300,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ---
 
-## Contact
-
-Your Name — [@twitter_handle](https://twitter.com/twitter_handle) — email@example.com
-
-Project Link: [https://github.com/YOUR_USERNAME/satellite-collision-detection](https://github.com/YOUR_USERNAME/satellite-collision-detection)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
----
-
 ## Acknowledgments
 
 - [Space-Track.org](https://www.space-track.org) — for providing free access to satellite orbital data
@@ -333,7 +323,7 @@ Project Link: [https://github.com/YOUR_USERNAME/satellite-collision-detection](h
 [license-shield]: https://img.shields.io/github/license/YOUR_USERNAME/satellite-collision-detection.svg?style=for-the-badge
 [license-url]: https://github.com/YOUR_USERNAME/satellite-collision-detection/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/YOUR_LINKEDIN_USERNAME
+[linkedin-url]: https://www.linkedin.com/in/dc-clarke/
 
 [screenshot-satellites]: images/screenshot-satellites.png
 [screenshot-warnings]: images/screenshot-warnings.png
