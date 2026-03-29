@@ -201,7 +201,14 @@ With 500 satellites loaded, the system evaluates ~125,000 unique pairs per detec
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
+### Key Challenges
 
+- [ ] Processing ~125,000 satellite pairs efficiently without excessive computation time
+- [ ] Handling unreliable external API responses with fallback datasets
+- [ ] Designing a clear UI to surface complex collision data meaningfully
+- [ ] Managing data flow between backend detection logic and frontend visualisation
+
+---
 ## Project Structure
 
 ```
