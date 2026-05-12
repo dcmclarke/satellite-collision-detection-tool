@@ -6,6 +6,8 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
+[![CI/CD](https://github.com/dcmclarke/satellite-collision-detection-tool/actions/workflows/ci.yml/badge.svg)](https://github.com/dcmclarke/satellite-collision-detection-tool/actions/workflows/ci.yml)
+
 
 <br />
 <div align="center">
@@ -39,6 +41,14 @@
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
+---
+
+## Live Demo
+
+**Frontend:** https://aesthetic-zuccutto-62414c.netlify.app  
+**Backend API:** https://satellite-backend-87h6.onrender.com/api
+
+*Note: Backend may take 30 seconds to wake up on first request (free tier).*
 
 ---
 
@@ -79,6 +89,12 @@ Key features:
 [![Axios][Axios-badge]][Axios-url]
 [![React Router][ReactRouter-badge]][ReactRouter-url]
 
+**Deployment & DevOps**
+
+[![Docker][Docker-badge]][Docker-url]
+[![Render][Render-badge]][Render-url]
+[![Netlify][Netlify-badge]][Netlify-url]
+
 **External API**
 
 [![Space-Track][SpaceTrack-badge]][SpaceTrack-url]
@@ -88,6 +104,14 @@ Key features:
 ---
 
 ## Getting Started
+
+## Deployment
+
+**Backend:** Dockerized and deployed on Render  
+**Frontend:** Deployed on Netlify  
+**CI/CD:** GitHub Actions runs tests automatically on every push
+
+See live demo links above.
 
 ### Prerequisites
 
@@ -354,3 +378,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [ReactRouter-url]: https://reactrouter.com/
 [SpaceTrack-badge]: https://img.shields.io/badge/Space--Track.org-1a1a2e?style=for-the-badge&logo=nasa&logoColor=white
 [SpaceTrack-url]: https://www.space-track.org
+[Docker-badge]: https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white
+[Docker-url]: https://www.docker.com/
+[Render-badge]: https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white
+[Render-url]: https://render.com/
+[Netlify-badge]: https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white
+[Netlify-url]: https://www.netlify.com/
