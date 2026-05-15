@@ -35,15 +35,7 @@ class CollisionDetectionServiceTest {
         satelliteRepository.deleteAll();
     }
 
-    //TEST 1: Sanity check
-    @Test
-    void testBasicMath() {
-        //testing testing working
-        int result = 2 + 2;
-        assertEquals(4, result);
-    }
-
-    // TEST 2: detect close satellites
+    // TEST 1: detect close satellites
     @Test
     void testDetectCollisions_FindsCloseApproach() {
         //create 2 sats very close together
@@ -60,7 +52,7 @@ class CollisionDetectionServiceTest {
         assertTrue(predictions.size() > 0, "Should detect close satellites");
     }
 
-    //TEST 3: empty db
+    //TEST 2: empty db
     @Test
     void testDetectCollisions_EmptyDatabase() {
 
@@ -69,7 +61,7 @@ class CollisionDetectionServiceTest {
         assertEquals(0, predictions.size(), "Empty databse should fine no collisions");
     }
 
-    //TEST 4: two far sats should not trigger collisions
+    //TEST 3: two far sats should not trigger collisions
     @Test
     void testDetectCollisions_TwoFarSatellites() {
 
@@ -85,7 +77,7 @@ class CollisionDetectionServiceTest {
         assertEquals(0, predictions.size(), "Far satellites shouldn't trigger collision warning");
     }
 
-    //TEST 5: risk level critical for satellites less than 2km apart
+    //TEST 4: risk level critical for satellites less than 2km apart
     @Test
     void testRiskLevel_VeryClose() {
 
@@ -105,7 +97,7 @@ class CollisionDetectionServiceTest {
         assertTrue(hasCritical, "Very close satellites should be CRITICAL risk");
     }
 
-    //TESt 6: risk level warning for satellites 2-3.5km apart
+    //TESt 5: risk level warning for satellites 2-3.5km apart
     @Test
     void testRiskLevel_ModerateDistance_ReturnsWarning() {
         Satellite sat1 = new Satellite("SAT1", "1", 0.0, 0.0, 400.0);
@@ -125,7 +117,7 @@ class CollisionDetectionServiceTest {
         assertTrue(hasWarning, "Moderately close satellites should be WARNING risk");
     }
 
-    //TEST 7: multiple satellites
+    //TEST 6: multiple satellites
     @Test
     void testDetectCollisions_ThreeSatellites() {
         Satellite sat1 = new Satellite("SAT1", "1", 0.0, 0.0, 400.0);
@@ -142,7 +134,7 @@ class CollisionDetectionServiceTest {
         assertTrue(predictions.size() <= 3, "Should not exceed possible pairs");
     }
 
-    //TEST 8: clears old predictions
+    //TEST 7: clears old predictions
     @Test
     void testDetectCollisions_ClearsOldPredictions() {
         Satellite sat1 = new Satellite("SAT1", "1", 0.0, 0.0, 400.0);

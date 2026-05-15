@@ -19,7 +19,6 @@ import java.util.List;
 @Service
 public class CollisionDetectionService {
    //distance thresholds (km)
-    private static final double EARTH_RADIUS = 6371.8;  //earth's radius in kms (standard reference value)
     private static final double COLLISION_THRESHOLD = 5.0;
     private static final double CRITICAL_DISTANCE = 2.0; // <2km = critical
     private static final double WARNING_DISTANCE = 3.5; // <3.5km = warning
@@ -94,46 +93,12 @@ public class CollisionDetectionService {
         return predictions;
     }
 
-    //now calculating 3D Euclidean distance between two satellites
-    //1. Convert both satellite's geodetic coordinates to cartesian (XYZ)
-    //2. Apply pythagorean theorem in 3D space: distance = sqrt((x2-x1)^2 + (y2-yq)^2 +(z2-z1)^2)
     private double calculateDistance(Satellite sat1, Satellite sat2) {
-        //convert both satellites to 3D cartesian coords
-        double[] pos1 = latLonAltToXYZ(sat1);
-        double[] pos2 = latLonAltToXYZ(sat2);
-
-        //calculating diff in each dimension
-        double dx = pos2[0] - pos1[0];
-        double dy = pos2[1] - pos1[1];
-        double dz = pos2[2] - pos1[2];
-
-        //pythag theorem in 3D (based on Baeldung java distance maths)
-        //gives straight line distance through 3D space
-        return Math.sqrt(dx*dx + dy*dy + dz*dz);
-    }
-
-    //converting satellite position from geodetic coords (lat/long/alt) to 3D cartesian coords (x,y,z)
-    //uses speherical to cartesian transformation:
-    //- X = (R + altitude) * cos(latitude) * cos(longitude)
-    //- Y = (R + altitude) * cos(latitude) * sin(longitude)
-    //- Z = (R + altitude) * sin(latitude)
-    //where R is Earth's radius at sea level (6371 km)
-
-    private double[] latLonAltToXYZ(Satellite sat) {
-        //convert degrees to radians (java trig functions use radians)
-        double latRad = Math.toRadians(sat.getLatitude());
-        double lonRad = Math.toRadians(sat.getLongitude());
-
-        //distnace from earth's center equals earth radisu plus altitude above sea level
-        double r = EARTH_RADIUS + sat.getAltitude();
-
-        //apply speherical to cartesian coordinate transformation
-        //which converts from (lat,lon,alt) to (x,y,z)
-        double x = r * Math.cos(latRad) * Math.cos(lonRad);
-        double y = r * Math.cos(latRad) * Math.sin(lonRad);
-        double z = r * Math.sin(latRad);
-
-        return new double[]{x, y, z};
+        double[] pos1 = CollisionMath.latLonAltToXYZ(
+                sat1.getLatitude(), sat1.getLongitude(), sat1.getAltitude());
+        double[] pos2 = CollisionMath.latLonAltToXYZ(
+                sat2.getLatitude(), sat2.getLongitude(), sat2.getAltitude());
+        return CollisionMath.euclideanDistance(pos1, pos2);
     }
 
     //creating CollisionPrediction object with risk assessment

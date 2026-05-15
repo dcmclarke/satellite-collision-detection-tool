@@ -24,15 +24,6 @@ public class Alert {
         this.acknowledged = false;
     }
 
-    //constructor with fields
-    private Alert(CollisionPrediction prediction, String alertLevel, String message) {
-        this.prediction = prediction;
-        this.alertLevel = alertLevel;
-        this.message = message;
-        this.sentAt = LocalDateTime.now();
-        this.acknowledged = false;
-    }
-
     //getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

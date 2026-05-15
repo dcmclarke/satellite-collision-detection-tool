@@ -4,6 +4,7 @@ WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 
+ENV MAVEN_OPTS="-Xmx400m -Xms256m"
 RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:21-jre

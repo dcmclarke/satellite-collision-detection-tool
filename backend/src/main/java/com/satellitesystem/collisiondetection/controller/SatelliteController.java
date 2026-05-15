@@ -8,9 +8,6 @@ import com.satellitesystem.collisiondetection.repository.SatelliteRepository;
 import com.satellitesystem.collisiondetection.service.CollisionDetectionService;
 import com.satellitesystem.collisiondetection.service.NasaApiService;
 import com.satellitesystem.collisiondetection.service.SatelliteService;
-import com.satellitesystem.collisiondetection.repository.SatelliteRepository;
-import com.satellitesystem.collisiondetection.repository.AlertRepository;
-import com.satellitesystem.collisiondetection.repository.CollisionPredictionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
