@@ -45,7 +45,7 @@
 
 ## Live Demo
 
-**Frontend:** https://aesthetic-zuccutto-62414c.netlify.app  
+**Frontend:** satellite-collision-detector.netlify.app
 **Backend API:** https://satellite-backend-87h6.onrender.com/api
 
 *Note: Backend may take 30 seconds to wake up on first request (free tier).*
