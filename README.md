@@ -22,8 +22,10 @@
 <details>
   <summary>Table of Contents</summary>
   <ol>
+    <li><a href="#project-status">Project Status</a></li>
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#built-with">Built With</a></li>
+    <li><a href="#deployment">Deployment</a></li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
@@ -43,12 +45,9 @@
 </details>
 ---
 
-## Live Demo
+## Project Status
 
-**Frontend:** satellite-collision-detector.netlify.app
-**Backend API:** https://satellite-backend-87h6.onrender.com/api
-
-*Note: Backend may take 30 seconds to wake up on first request (free tier).*
+The hosted deployment is currently offline while the project is being reworked, so there is no live demo at the moment. The screenshots below show the app running, and you can run it locally by following [Getting Started](#getting-started).
 
 ---
 
@@ -103,15 +102,19 @@ Key features:
 
 ---
 
-## Getting Started
-
 ## Deployment
 
-**Backend:** Dockerized and deployed on Render  
-**Frontend:** Deployed on Netlify  
+**Backend:** Dockerized; previously deployed on Render  
+**Frontend:** Previously deployed on Netlify  
 **CI/CD:** GitHub Actions runs tests automatically on every push
 
-See live demo links above.
+The hosted deployment is currently offline (see [Project Status](#project-status)).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+## Getting Started
 
 ### Prerequisites
 
