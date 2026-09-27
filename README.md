@@ -13,7 +13,7 @@
 <div align="center">
   <h3 align="center">Satellite Collision Detection System</h3>
   <p align="center">
-    A real-time satellite tracking and collision detection system using live orbital data from Space-Track.org
+    An educational full-stack demo that screens satellite pairs for close approaches using orbital data from Space-Track.org
   </p>
 </div>
 
@@ -49,20 +49,28 @@
 
 The hosted deployment is currently offline while the project is being reworked, so there is no live demo at the moment. The screenshots below show the app running, and you can run it locally by following [Getting Started](#getting-started).
 
+**Scope and known issues (v1.0)**
+
+- v1.0 was built as 12-week coursework. It is an educational demo, not an operational conjunction-assessment tool.
+- There is no SGP4 orbital propagation. Satellites are compared at a single point, with no time dimension.
+- **Known issue:** the orbital elements from Space-Track are mapped to positions incorrectly. Inclination is stored as latitude, right ascension of the ascending node as longitude, and mean motion × 100 as altitude. The computed distances are therefore illustrative only and don't reflect real separations.
+- The "probability" shown for each warning is a fixed score per risk tier, not a calculated collision probability.
+- A rebuild is in progress to fix these issues.
+
 ---
 
 ## About The Project
 
 <img width="1262" height="642" alt="image" src="https://github.com/user-attachments/assets/4dffb180-8113-4713-ae7b-45346092c7f4" />
 
-A full-stack satellite collision detection system built as a final project while learning full-stack development for an HDip in Software Development. The system fetches live orbital data for 500+ satellites from the US Space Force's Space-Track.org API, runs proximity-based collision detection across every satellite pair, and surfaces warnings through a React dashboard.
+A full-stack satellite collision detection demo built as a final project for the Higher Diploma in Science in Computing (Software) at NCI. The system fetches orbital element data for up to 500 catalogued objects from the US Space Force's Space-Track.org API, runs a distance-based proximity check across every pair, and shows warnings in a React dashboard. See [Project Status](#project-status) for its limitations.
 
 Key features:
 
-- Fetch live TLE (Two-Line Element) orbital data from Space-Track.org (500+ satellites)
-- 3D Euclidean distance-based collision detection across all satellite pairs
+- Fetch current orbital element data from Space-Track.org (up to 500 objects per fetch)
+- 3D Euclidean distance screening across all satellite pairs
 - Risk classification: **CRITICAL** (<2 km), **WARNING** (2–3.5 km), **INFO** (3.5–5 km)
-- Colour-coded collision warnings with probability scores
+- Colour-coded collision warnings with a fixed score per risk tier
 - Alert acknowledgement workflow
 - Backup dataset for offline demo / presentation use
 - Sortable, searchable satellite table
@@ -180,7 +188,7 @@ The app will open automatically at `http://localhost:3000`.
 
 ## Usage
 
-1. On the **Satellites** page, click **Fetch NASA Data** for live data (500+ satellites), or **Load Backup Data** for a quick offline demo with 4 pre-configured satellites
+1. On the **Satellites** page, click **Fetch NASA Data** to pull data from Space-Track.org (up to 500 objects), or **Load Backup Data** for a quick offline demo with 4 pre-configured satellites
 2. Click **Run Collision Detection** — the system checks every satellite pair and saves any close approaches
 3. Navigate to **Warnings** to view collision predictions filtered by risk level
 4. Navigate to **Alerts** to review and acknowledge alerts
@@ -205,7 +213,9 @@ Y = (R + altitude) × cos(lat) × sin(lon)
 Z = (R + altitude) × sin(lat)
 ```
 
-where R = 6,371.8 km (Earth's mean radius).
+where R = 6,371.8 km (Earth's mean radius, as used in the code).
+
+> **Known issue:** in v1.0 the inputs to this step aren't real geodetic coordinates. Inclination is used as latitude, RAAN as longitude and mean motion × 100 as altitude, so the resulting distances are illustrative only. See [Project Status](#project-status).
 
 **Step 2** — Compute the straight-line distance between each pair using the Pythagorean theorem in 3D:
 
@@ -215,13 +225,13 @@ distance = √((x₂-x₁)² + (y₂-y₁)² + (z₂-z₁)²)
 
 **Step 3** — Pairs within 5 km trigger a prediction, classified by distance:
 
-| Risk Level | Distance | Probability Score |
+| Risk Level | Distance | Score shown (fixed per tier) |
 |---|---|---|
 | 🔴 CRITICAL | < 2 km | 90% |
 | 🟡 WARNING | 2 – 3.5 km | 60% |
 | 🔵 INFO | 3.5 – 5 km | 30% |
 
-Note: This uses simplified 3D distance calculations. Production systems would use SGP4 orbital propagation for higher accuracy.
+The score is a fixed lookup based on the risk tier, not a calculated collision probability. This is a single-snapshot distance check. Production systems propagate orbits over time (e.g. with SGP4) and compute probability of collision from position uncertainty.
 
 With 500 satellites loaded, the system evaluates ~125,000 unique pairs per detection run.
 

@@ -1,6 +1,6 @@
 # Satellite Collision Detection System
 
-A real-time satellite tracking and collision detection system using data from Space-Track.org.
+An educational full-stack demo that screens satellite pairs for close approaches using orbital data from Space-Track.org. See the [main README](../README.md#project-status) for scope and known issues.
 
 ## Prerequisites
 
