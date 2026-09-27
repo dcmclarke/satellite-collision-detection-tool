@@ -29,7 +29,7 @@ Copy the example configuration:
 
 ```bash
 cd backend
-cp src/main/resources/application-example.properties src/main/resources/application.properties
+cp src/main/resources/templates/application-example.properties src/main/resources/application.properties
 ```
 
 Edit `application.properties` and set your credentials:
@@ -57,7 +57,7 @@ Open a new terminal window for the frontend.
 ### 1. Install Dependencies
 
 ```bash
-cd satellite-collision-detection-project/frontend
+cd satellite-collision-detection-tool/frontend
 npm install
 ```
 

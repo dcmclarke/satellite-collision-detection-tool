@@ -240,10 +240,10 @@ With 500 satellites loaded, the system evaluates ~125,000 unique pairs per detec
 ---
 ### Key Challenges
 
-- [ ] Processing ~125,000 satellite pairs efficiently without excessive computation time
-- [ ] Handling unreliable external API responses with fallback datasets
-- [ ] Designing a clear UI to surface complex collision data meaningfully
-- [ ] Managing data flow between backend detection logic and frontend visualisation
+- Processing ~125,000 satellite pairs efficiently without excessive computation time
+- Handling unreliable external API responses with fallback datasets
+- Designing a clear UI to surface complex collision data meaningfully
+- Managing data flow between backend detection logic and frontend visualisation
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -289,7 +289,7 @@ Base URL: `http://localhost:8080/api`
 | Method | Endpoint | Description |
 |---|---|---|
 | `GET` | `/satellites` | Get all satellites |
-| `POST` | `/satellites/fetch-nasa-data` | Fetch live data from Space-Track.org |
+| `POST` | `/satellites/fetch-nasa-data` | Fetch orbital data from Space-Track.org |
 | `POST` | `/satellites/load-backup-data` | Load offline demo dataset |
 | `POST` | `/satellites/detect-collisions` | Run collision detection |
 | `POST` | `/satellites/clear-all` | Clear all data |
@@ -319,7 +319,7 @@ Base URL: `http://localhost:8080/api`
 - [ ] Scheduled automatic data refresh
 - [ ] Email / push notifications for critical alerts
 - [ ] 3D globe visualisation of satellite orbits
-- [ ] Docker Compose setup for one-command startup
+- [ ] Add the frontend to Docker Compose for one-command startup (currently backend + database only)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -371,9 +371,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [license-url]: https://github.com/dcmclarke/satellite-collision-detection-tool/blob/main/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/dc-clarke/
-
-[screenshot-satellites]: images/screenshot-satellites.png
-[screenshot-warnings]: images/screenshot-warnings.png
 
 [Java-badge]: https://img.shields.io/badge/Java_21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white
 [Java-url]: https://adoptium.net/
