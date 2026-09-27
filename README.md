@@ -56,7 +56,7 @@
 
 <img width="1262" height="642" alt="image" src="https://github.com/user-attachments/assets/4dffb180-8113-4713-ae7b-45346092c7f4" />
 
-A full-stack satellite collision detection system built as a final project while learning full-stack development for an HDip in Software Development. The system fetches live orbital data for 500+ satellites from NASA's Space-Track.org API, runs proximity-based collision detection across every satellite pair, and surfaces warnings through a React dashboard.
+A full-stack satellite collision detection system built as a final project while learning full-stack development for an HDip in Software Development. The system fetches live orbital data for 500+ satellites from the US Space Force's Space-Track.org API, runs proximity-based collision detection across every satellite pair, and surfaces warnings through a React dashboard.
 
 Key features:
 
@@ -336,7 +336,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Acknowledgments
 
-- [Space-Track.org](https://www.space-track.org) — for providing free access to satellite orbital data
+- [Space-Track.org](https://www.space-track.org) (US Space Force) — for providing free access to satellite orbital data
 - [othneildrew/Best-README-Template](https://github.com/othneildrew/Best-README-Template) — README structure reference
 - [Spring Boot](https://spring.io/projects/spring-boot)
 - [Create React App](https://github.com/facebook/create-react-app)
@@ -376,7 +376,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [Axios-url]: https://axios-http.com/
 [ReactRouter-badge]: https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white
 [ReactRouter-url]: https://reactrouter.com/
-[SpaceTrack-badge]: https://img.shields.io/badge/Space--Track.org-1a1a2e?style=for-the-badge&logo=nasa&logoColor=white
+[SpaceTrack-badge]: https://img.shields.io/badge/Space--Track.org-1a1a2e?style=for-the-badge
 [SpaceTrack-url]: https://www.space-track.org
 [Docker-badge]: https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white
 [Docker-url]: https://www.docker.com/
