@@ -55,7 +55,7 @@ The hosted deployment is currently offline while the project is being reworked, 
 - There is no SGP4 orbital propagation. Satellites are compared at a single point, with no time dimension.
 - **Known issue:** the orbital elements from Space-Track are mapped to positions incorrectly. Inclination is stored as latitude, right ascension of the ascending node as longitude, and mean motion × 100 as altitude. The computed distances are therefore illustrative only and don't reflect real separations.
 - The "probability" shown for each warning is a fixed score per risk tier, not a calculated collision probability.
-- A rebuild is in progress to fix these issues.
+- A rebuild is in progress to fix these issues. The original coursework version is preserved at the [`v1.0-coursework`](https://github.com/dcmclarke/satellite-collision-detection-tool/tree/v1.0-coursework) tag.
 
 ---
 
