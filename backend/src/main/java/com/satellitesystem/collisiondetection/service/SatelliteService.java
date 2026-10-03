@@ -16,10 +16,6 @@ public class SatelliteService {
         return repository.findAll();
     }
 
-    public Satellite saveSatellite(Satellite satellite) {
-        return repository.save(satellite);
-    }
-
     public Satellite getSatellite(Long id) {
         return repository.findById(id).orElse(null);
     }

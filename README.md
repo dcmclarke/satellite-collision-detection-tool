@@ -292,7 +292,6 @@ Base URL: `http://localhost:8080/api`
 | `POST` | `/satellites/fetch-nasa-data` | Fetch orbital data from Space-Track.org |
 | `POST` | `/satellites/load-backup-data` | Load offline demo dataset |
 | `POST` | `/satellites/detect-collisions` | Run collision detection |
-| `POST` | `/satellites/clear-all` | Clear all data |
 
 ### Collisions
 

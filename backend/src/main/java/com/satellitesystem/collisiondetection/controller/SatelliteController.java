@@ -49,11 +49,6 @@ public class SatelliteController {
         return service.getAllSatellites();
     }
 
-    @PostMapping
-    public Satellite createSatellite(@RequestBody Satellite satellite) {
-        return service.saveSatellite(satellite);
-    }
-
     @GetMapping("/{id}")
     public Satellite getSatellite(@PathVariable Long id) {
         return service.getSatellite(id);
@@ -90,15 +85,5 @@ public class SatelliteController {
         String result = nasaApiService.loadBackupData();
         long totalCount = nasaApiService.getSatelliteCount();
         return result + " Total satellites in database: " + totalCount;
-    }
-
-    //fix for dupe satellites - deletes in correct order
-    @PostMapping("/clear-all")
-    public String clearAll() {
-        //delete in order: alerts, collision predictions, sats
-        alertRepository.deleteAll();
-        collisionPredictionRepository.deleteAll();
-        satelliteRepository.deleteAll();
-        return "Data all cleared from database.";
     }
 }

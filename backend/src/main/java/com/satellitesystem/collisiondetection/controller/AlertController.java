@@ -28,11 +28,6 @@ public class AlertController {
         return service.getRecentAlerts();
     }
 
-    @PostMapping
-    public Alert createAlert(@RequestBody Alert alert) {
-        return service.saveAlert(alert);
-    }
-
     @PostMapping("/{id}/acknowledge")
     public Alert acknowledgeAlert(@PathVariable Long id) {
         return service.acknowledgeAlert(id);
