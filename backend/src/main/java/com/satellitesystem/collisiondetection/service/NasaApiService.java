@@ -68,8 +68,6 @@ public class NasaApiService {
             HttpResponse<String> loginResponse = client.send(loginRequest, HttpResponse.BodyHandlers.ofString());
 
             System.out.println("Login response: " + loginResponse.statusCode());
-            System.out.println("Login body: " + loginResponse.body());
-            System.out.println("Cookies stored: " + cookieManager.getCookieStore().getCookies());
 
             //check if login succeeded
             if (loginResponse.body().contains("\"Login\":\"Failed\"")) {
