@@ -43,7 +43,6 @@ public class NasaApiService {
             //create cookie manager
             CookieManager cookieManager = new CookieManager();
             cookieManager.setCookiePolicy(java.net.CookiePolicy.ACCEPT_ALL);
-            java.net.CookieHandler.setDefault(cookieManager);
 
             //create HTTP client
             HttpClient client = HttpClient.newBuilder()
