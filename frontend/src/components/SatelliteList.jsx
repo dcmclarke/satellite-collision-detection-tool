@@ -79,13 +79,13 @@ function SatelliteList() {
     setSortConfig({ key, direction });
   };
 
-  const handleFetchNasa = async () => {
+  const handleFetchSpaceTrack = async () => {
     setLoading(true);
-    setMessage('Fetching live NASA data from Space-Track.org...');
+    setMessage('Fetching live data from Space-Track.org...');
     setMessageType('info');
 
     try {
-      const response = await satelliteApi.fetchNasaData();
+      const response = await satelliteApi.fetchSpaceTrackData();
       setMessage(`${response.data}`);
       setMessageType('success');
       await new Promise(resolve => setTimeout(resolve, 5000));
@@ -130,7 +130,7 @@ function SatelliteList() {
 
         {/* backup data note */}
         <div className="backup-note">
-          <strong>Note:</strong> Backup data is for demo/presentation purposes if the NASA Space-Track API is unavailable
+          <strong>Note:</strong> Backup data is for demo/presentation purposes if the Space-Track API is unavailable
         </div>
         
         <div className="data-source-buttons">
@@ -149,7 +149,7 @@ function SatelliteList() {
           </button>
           
           <button 
-            onClick={handleFetchNasa} 
+            onClick={handleFetchSpaceTrack} 
             disabled={loading}
             className="data-source-btn primary"
           >
@@ -157,7 +157,7 @@ function SatelliteList() {
               <FontAwesomeIcon icon={faSatellite} />
             </div>
             <div className="btn-content">
-              <div className="btn-title">Fetch NASA Data</div>
+              <div className="btn-title">Fetch Space-Track Data</div>
               <div className="btn-description">500+ satellites • Live data</div>
             </div>
           </button>

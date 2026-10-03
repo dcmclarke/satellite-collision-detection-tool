@@ -21,18 +21,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class NasaApiService {
+public class SpaceTrackApiService {
 
     @Autowired
     private SatelliteRepository satelliteRepository;
 
-    @Value("${nasa.api.username}")
+    @Value("${spacetrack.api.username}")
     private String username;
 
-    @Value("${nasa.api.password}")
+    @Value("${spacetrack.api.password}")
     private String password;
 
-    @Value("${nasa.api.url}")
+    @Value("${spacetrack.api.url}")
     private String apiUrl;
 
     //fetches sat data from Space-Track.org api, gets latest 100 sats for testing
@@ -111,7 +111,7 @@ public class NasaApiService {
         }
     }
 
-    //parses JSON from NASA & converts to sat objects
+    //parses JSON from Space-Track & converts to sat objects
     private int parseSatelliteData(String jsonData) {
         try {
             ObjectMapper mapper = new ObjectMapper();

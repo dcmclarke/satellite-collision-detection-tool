@@ -6,7 +6,7 @@ import com.satellitesystem.collisiondetection.repository.AlertRepository;
 import com.satellitesystem.collisiondetection.repository.CollisionPredictionRepository;
 import com.satellitesystem.collisiondetection.repository.SatelliteRepository;
 import com.satellitesystem.collisiondetection.service.CollisionDetectionService;
-import com.satellitesystem.collisiondetection.service.NasaApiService;
+import com.satellitesystem.collisiondetection.service.SpaceTrackApiService;
 import com.satellitesystem.collisiondetection.service.SatelliteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ public class SatelliteController {
     private SatelliteService service;
 
     @Autowired
-    private NasaApiService nasaApiService;
+    private SpaceTrackApiService spaceTrackApiService;
 
     @Autowired
     private CollisionDetectionService collisionDetectionService;
@@ -54,18 +54,18 @@ public class SatelliteController {
         return service.getSatellite(id);
     }
 
-    /*PRIMARY METHOD: fetches live data from nasa space-track api
-    *POST http://localhost:8080/api/satellites/fetch-nasa-data
+    /*PRIMARY METHOD: fetches live data from Space-Track api
+    *POST http://localhost:8080/api/satellites/fetch-spacetrack-data
     */
-    @PostMapping("/fetch-nasa-data")
-    public String fetchNasaData() {
+    @PostMapping("/fetch-spacetrack-data")
+    public String fetchSpaceTrackData() {
         //clear all data first to fix the satellite stacking issue
         alertRepository.deleteAll();
         collisionPredictionRepository.deleteAll();
         satelliteRepository.deleteAll();
 
-        String result = nasaApiService.fetchAndStoreSatellites();
-        long totalCount = nasaApiService.getSatelliteCount();
+        String result = spaceTrackApiService.fetchAndStoreSatellites();
+        long totalCount = spaceTrackApiService.getSatelliteCount();
         return result + " Total satellites in database: " + totalCount;
     }
 
@@ -82,8 +82,8 @@ public class SatelliteController {
         collisionPredictionRepository.deleteAll();
         satelliteRepository.deleteAll();
 
-        String result = nasaApiService.loadBackupData();
-        long totalCount = nasaApiService.getSatelliteCount();
+        String result = spaceTrackApiService.loadBackupData();
+        long totalCount = spaceTrackApiService.getSatelliteCount();
         return result + " Total satellites in database: " + totalCount;
     }
 }

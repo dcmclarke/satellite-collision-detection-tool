@@ -36,8 +36,8 @@ Edit `application.properties` and set your credentials:
 
 ```properties
 spring.datasource.password=YOUR_POSTGRES_PASSWORD
-nasa.api.username=YOUR_SPACETRACK_USERNAME
-nasa.api.password=YOUR_SPACETRACK_PASSWORD
+spacetrack.api.username=YOUR_SPACETRACK_USERNAME
+spacetrack.api.password=YOUR_SPACETRACK_PASSWORD
 ```
 
 ### 3. Start Backend (Terminal 1)
@@ -74,7 +74,7 @@ The frontend will start on http://localhost:3000 and automatically open in your 
 ## Verification
 
 1. Navigate to http://localhost:3000
-2. Click **"Fetch NASA Data"**
+2. Click **"Fetch Space-Track Data"**
 3. Click **"Run Collision Detection"**
 4. Navigate to the **"Warnings"** page to see results
 

@@ -159,8 +159,8 @@ Edit `application.properties` and fill in your credentials:
 
 ```properties
 spring.datasource.password=YOUR_POSTGRES_PASSWORD
-nasa.api.username=YOUR_SPACETRACK_USERNAME
-nasa.api.password=YOUR_SPACETRACK_PASSWORD
+spacetrack.api.username=YOUR_SPACETRACK_USERNAME
+spacetrack.api.password=YOUR_SPACETRACK_PASSWORD
 ```
 
 **4. Start the backend (Terminal 1)**
@@ -188,7 +188,7 @@ The app will open automatically at `http://localhost:3000`.
 
 ## Usage
 
-1. On the **Satellites** page, click **Fetch NASA Data** to pull data from Space-Track.org (up to 500 objects), or **Load Backup Data** for a quick offline demo with 4 pre-configured satellites
+1. On the **Satellites** page, click **Fetch Space-Track Data** to pull data from Space-Track.org (up to 500 objects), or **Load Backup Data** for a quick offline demo with 4 pre-configured satellites
 2. Click **Run Collision Detection** — the system checks every satellite pair and saves any close approaches
 3. Navigate to **Warnings** to view collision predictions filtered by risk level
 4. Navigate to **Alerts** to review and acknowledge alerts
@@ -259,7 +259,7 @@ satellite-collision-detection-tool/
 │       ├── repository/         # Spring Data JPA repositories
 │       ├── service/
 │       │   ├── CollisionDetectionService.java   # Core detection algorithm
-│       │   ├── NasaApiService.java              # Space-Track.org integration
+│       │   ├── SpaceTrackApiService.java              # Space-Track.org integration
 │       │   ├── AlertService.java
 │       │   └── SatelliteService.java
 │       └── config/             # CORS configuration
@@ -289,7 +289,7 @@ Base URL: `http://localhost:8080/api`
 | Method | Endpoint | Description |
 |---|---|---|
 | `GET` | `/satellites` | Get all satellites |
-| `POST` | `/satellites/fetch-nasa-data` | Fetch orbital data from Space-Track.org |
+| `POST` | `/satellites/fetch-spacetrack-data` | Fetch orbital data from Space-Track.org |
 | `POST` | `/satellites/load-backup-data` | Load offline demo dataset |
 | `POST` | `/satellites/detect-collisions` | Run collision detection |
 
