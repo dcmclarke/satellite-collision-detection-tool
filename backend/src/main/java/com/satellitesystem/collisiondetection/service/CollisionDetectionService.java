@@ -5,7 +5,6 @@ import com.satellitesystem.collisiondetection.model.CollisionPrediction;
 import com.satellitesystem.collisiondetection.repository.SatelliteRepository;
 import com.satellitesystem.collisiondetection.repository.CollisionPredictionRepository;
 import com.satellitesystem.collisiondetection.model.Alert;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
@@ -169,10 +168,5 @@ public class CollisionDetectionService {
     //get count of satellites currently in db
     public long getSatelliteCount() {
         return satelliteRepository.count();
-    }
-
-    //get count of active collision predictions
-    public long getCollisionCount() {
-        return collisionRepository.findByStatus("ACTIVE").size();
     }
 }

@@ -14,19 +14,11 @@ public class CollisionPredictionService {
         this.repository = repository;
     }
 
-    public List<CollisionPrediction> getAllPredictions() {
-        return repository.findAll();
-    }
-
     public List<CollisionPrediction> getActivePredictions() {
         return repository.findByStatus("ACTIVE");
     }
 
     public List<CollisionPrediction> getCriticalPredictions() {
         return repository.findByRiskLevel("CRITICAL");
-    }
-
-    public CollisionPrediction savePrediction(CollisionPrediction prediction) {
-        return repository.save(prediction);
     }
 }
