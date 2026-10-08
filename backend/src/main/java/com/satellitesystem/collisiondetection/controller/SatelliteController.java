@@ -26,7 +26,7 @@ public class SatelliteController {
     }
 
     //trigger collision detection for all satellites
-    //POST http://localhost:8080/api/satellites/detection-collisions
+    //POST http://localhost:8080/api/satellites/detect-collisions
     @PostMapping("/detect-collisions")
     public String detectCollisions() {
         List<CollisionPrediction> predictions = collisionDetectionService.detectCollisions();

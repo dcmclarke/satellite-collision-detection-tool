@@ -41,7 +41,7 @@ public class SpaceTrackApiService {
         this.apiUrl = apiUrl;
     }
 
-    //fetches sat data from Space-Track.org api, gets latest 100 sats for testing
+    //fetches sat data from Space-Track.org api, up to 500 sats (see limit in dataUrl)
     public String fetchAndStoreSatellites() {
         log.info("Starting Space-Track API fetch");
 

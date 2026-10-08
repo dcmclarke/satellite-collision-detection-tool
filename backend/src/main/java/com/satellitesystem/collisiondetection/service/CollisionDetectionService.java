@@ -70,7 +70,7 @@ public class CollisionDetectionService {
         log.info("Analysing {} satellites", satellites.size());
 
         //check every unique pair of satellites
-        //currently using nested loop for 11 satellites, checking 55 pairs (n*(n-1)/2)
+        //nested loop checks n*(n-1)/2 pairs, e.g. 500 satellites = 124,750 pairs
         int pairsChecked = 0;
         for (int i = 0; i < satellites.size(); i++) {
             for (int j = i + 1; j <satellites.size(); j++) {
