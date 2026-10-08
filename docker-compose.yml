@@ -9,9 +9,9 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/satellitedb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
-      NASA_API_USERNAME: ${NASA_API_USERNAME}
-      NASA_API_PASSWORD: ${NASA_API_PASSWORD}
-      NASA_API_URL: https://www.space-track.org
+      SPACETRACK_API_USERNAME: ${SPACETRACK_API_USERNAME}
+      SPACETRACK_API_PASSWORD: ${SPACETRACK_API_PASSWORD}
+      SPACETRACK_API_URL: https://www.space-track.org
     depends_on:
       - db
 
