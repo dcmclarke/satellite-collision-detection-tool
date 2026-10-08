@@ -2,7 +2,6 @@ package com.satellitesystem.collisiondetection.controller;
 
 import com.satellitesystem.collisiondetection.model.Alert;
 import com.satellitesystem.collisiondetection.service.AlertService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -10,8 +9,11 @@ import java.util.List;
 @RequestMapping("/api/alerts")
 public class AlertController {
 
-    @Autowired
-    private AlertService service;
+    private final AlertService service;
+
+    public AlertController(AlertService service) {
+        this.service = service;
+    }
 
     @GetMapping
     public List<Alert> getAllAlerts() {

@@ -2,15 +2,18 @@ package com.satellitesystem.collisiondetection.service;
 
 import com.satellitesystem.collisiondetection.model.Satellite;
 import com.satellitesystem.collisiondetection.repository.SatelliteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 public class SatelliteService {
 
-    @Autowired //dependency injection
-    private SatelliteRepository repository;
+    private final SatelliteRepository repository;
+
+    //dependency injection: Spring passes the repository in when it creates this service
+    public SatelliteService(SatelliteRepository repository) {
+        this.repository = repository;
+    }
 
     public List<Satellite> getAllSatellites() {
         return repository.findAll();

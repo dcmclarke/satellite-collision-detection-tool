@@ -5,7 +5,6 @@ import com.satellitesystem.collisiondetection.model.CollisionPrediction;
 import com.satellitesystem.collisiondetection.repository.SatelliteRepository;
 import com.satellitesystem.collisiondetection.repository.CollisionPredictionRepository;
 import com.satellitesystem.collisiondetection.model.Alert;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.satellitesystem.collisiondetection.repository.AlertRepository;
@@ -28,17 +27,20 @@ public class CollisionDetectionService {
     private static final int PROBABILITY_WARNING = 60;
     private static final int PROBABILITY_INFO = 30;
 
-    @Autowired
-    private AlertService alertService;
+    private final AlertService alertService;
+    private final SatelliteRepository satelliteRepository;
+    private final CollisionPredictionRepository collisionRepository;
+    private final AlertRepository alertRepository;
 
-    @Autowired
-    private SatelliteRepository satelliteRepository;
-
-    @Autowired
-    private CollisionPredictionRepository collisionRepository;
-
-    @Autowired
-    private AlertRepository alertRepository;
+    public CollisionDetectionService(AlertService alertService,
+                                     SatelliteRepository satelliteRepository,
+                                     CollisionPredictionRepository collisionRepository,
+                                     AlertRepository alertRepository) {
+        this.alertService = alertService;
+        this.satelliteRepository = satelliteRepository;
+        this.collisionRepository = collisionRepository;
+        this.alertRepository = alertRepository;
+    }
 
     //main method detecitn all potential collisions in satellite population
     //checks every pair of satellites for proximity within collision threshold

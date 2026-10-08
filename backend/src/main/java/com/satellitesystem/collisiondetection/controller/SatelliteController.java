@@ -8,7 +8,6 @@ import com.satellitesystem.collisiondetection.repository.SatelliteRepository;
 import com.satellitesystem.collisiondetection.service.CollisionDetectionService;
 import com.satellitesystem.collisiondetection.service.SpaceTrackApiService;
 import com.satellitesystem.collisiondetection.service.SatelliteService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,23 +16,26 @@ import java.util.List;
 @RequestMapping("api/satellites")
 public class SatelliteController {
 
-    @Autowired
-    private SatelliteService service;
+    private final SatelliteService service;
+    private final SpaceTrackApiService spaceTrackApiService;
+    private final CollisionDetectionService collisionDetectionService;
+    private final SatelliteRepository satelliteRepository;
+    private final AlertRepository alertRepository;
+    private final CollisionPredictionRepository collisionPredictionRepository;
 
-    @Autowired
-    private SpaceTrackApiService spaceTrackApiService;
-
-    @Autowired
-    private CollisionDetectionService collisionDetectionService;
-
-    @Autowired
-    private SatelliteRepository satelliteRepository;
-
-    @Autowired
-    private AlertRepository alertRepository;
-
-    @Autowired
-    private CollisionPredictionRepository collisionPredictionRepository;
+    public SatelliteController(SatelliteService service,
+                               SpaceTrackApiService spaceTrackApiService,
+                               CollisionDetectionService collisionDetectionService,
+                               SatelliteRepository satelliteRepository,
+                               AlertRepository alertRepository,
+                               CollisionPredictionRepository collisionPredictionRepository) {
+        this.service = service;
+        this.spaceTrackApiService = spaceTrackApiService;
+        this.collisionDetectionService = collisionDetectionService;
+        this.satelliteRepository = satelliteRepository;
+        this.alertRepository = alertRepository;
+        this.collisionPredictionRepository = collisionPredictionRepository;
+    }
 
     //trigger collision detection for all satellites
     //POST http://localhost:8080/api/satellites/detection-collisions

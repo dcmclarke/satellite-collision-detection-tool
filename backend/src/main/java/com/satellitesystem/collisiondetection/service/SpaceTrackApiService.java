@@ -2,7 +2,6 @@ package com.satellitesystem.collisiondetection.service;
 
 import com.satellitesystem.collisiondetection.model.Satellite;
 import com.satellitesystem.collisiondetection.repository.SatelliteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -23,17 +22,20 @@ import java.util.List;
 @Service
 public class SpaceTrackApiService {
 
-    @Autowired
-    private SatelliteRepository satelliteRepository;
+    private final SatelliteRepository satelliteRepository;
+    private final String username;
+    private final String password;
+    private final String apiUrl;
 
-    @Value("${spacetrack.api.username}")
-    private String username;
-
-    @Value("${spacetrack.api.password}")
-    private String password;
-
-    @Value("${spacetrack.api.url}")
-    private String apiUrl;
+    public SpaceTrackApiService(SatelliteRepository satelliteRepository,
+                                @Value("${spacetrack.api.username}") String username,
+                                @Value("${spacetrack.api.password}") String password,
+                                @Value("${spacetrack.api.url}") String apiUrl) {
+        this.satelliteRepository = satelliteRepository;
+        this.username = username;
+        this.password = password;
+        this.apiUrl = apiUrl;
+    }
 
     //fetches sat data from Space-Track.org api, gets latest 100 sats for testing
     public String fetchAndStoreSatellites() {
