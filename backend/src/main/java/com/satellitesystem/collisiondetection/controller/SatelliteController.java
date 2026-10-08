@@ -2,9 +2,6 @@ package com.satellitesystem.collisiondetection.controller;
 
 import com.satellitesystem.collisiondetection.model.CollisionPrediction;
 import com.satellitesystem.collisiondetection.model.Satellite;
-import com.satellitesystem.collisiondetection.repository.AlertRepository;
-import com.satellitesystem.collisiondetection.repository.CollisionPredictionRepository;
-import com.satellitesystem.collisiondetection.repository.SatelliteRepository;
 import com.satellitesystem.collisiondetection.service.CollisionDetectionService;
 import com.satellitesystem.collisiondetection.service.SpaceTrackApiService;
 import com.satellitesystem.collisiondetection.service.SatelliteService;
@@ -19,22 +16,13 @@ public class SatelliteController {
     private final SatelliteService service;
     private final SpaceTrackApiService spaceTrackApiService;
     private final CollisionDetectionService collisionDetectionService;
-    private final SatelliteRepository satelliteRepository;
-    private final AlertRepository alertRepository;
-    private final CollisionPredictionRepository collisionPredictionRepository;
 
     public SatelliteController(SatelliteService service,
                                SpaceTrackApiService spaceTrackApiService,
-                               CollisionDetectionService collisionDetectionService,
-                               SatelliteRepository satelliteRepository,
-                               AlertRepository alertRepository,
-                               CollisionPredictionRepository collisionPredictionRepository) {
+                               CollisionDetectionService collisionDetectionService) {
         this.service = service;
         this.spaceTrackApiService = spaceTrackApiService;
         this.collisionDetectionService = collisionDetectionService;
-        this.satelliteRepository = satelliteRepository;
-        this.alertRepository = alertRepository;
-        this.collisionPredictionRepository = collisionPredictionRepository;
     }
 
     //trigger collision detection for all satellites
@@ -62,9 +50,7 @@ public class SatelliteController {
     @PostMapping("/fetch-spacetrack-data")
     public String fetchSpaceTrackData() {
         //clear all data first to fix the satellite stacking issue
-        alertRepository.deleteAll();
-        collisionPredictionRepository.deleteAll();
-        satelliteRepository.deleteAll();
+        service.deleteAllData();
 
         String result = spaceTrackApiService.fetchAndStoreSatellites();
         long totalCount = spaceTrackApiService.getSatelliteCount();
@@ -80,9 +66,7 @@ public class SatelliteController {
     @PostMapping("/load-backup-data")
     public String loadBackupData() {
         //clear all data first to fix the satellite stacking issue
-        alertRepository.deleteAll();
-        collisionPredictionRepository.deleteAll();
-        satelliteRepository.deleteAll();
+        service.deleteAllData();
 
         String result = spaceTrackApiService.loadBackupData();
         long totalCount = spaceTrackApiService.getSatelliteCount();

@@ -1,6 +1,8 @@
 package com.satellitesystem.collisiondetection.service;
 
 import com.satellitesystem.collisiondetection.model.Satellite;
+import com.satellitesystem.collisiondetection.repository.AlertRepository;
+import com.satellitesystem.collisiondetection.repository.CollisionPredictionRepository;
 import com.satellitesystem.collisiondetection.repository.SatelliteRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -9,10 +11,16 @@ import java.util.List;
 public class SatelliteService {
 
     private final SatelliteRepository repository;
+    private final AlertRepository alertRepository;
+    private final CollisionPredictionRepository collisionPredictionRepository;
 
-    //dependency injection: Spring passes the repository in when it creates this service
-    public SatelliteService(SatelliteRepository repository) {
+    //dependency injection: Spring passes the repositories in when it creates this service
+    public SatelliteService(SatelliteRepository repository,
+                            AlertRepository alertRepository,
+                            CollisionPredictionRepository collisionPredictionRepository) {
         this.repository = repository;
+        this.alertRepository = alertRepository;
+        this.collisionPredictionRepository = collisionPredictionRepository;
     }
 
     public List<Satellite> getAllSatellites() {
@@ -21,5 +29,13 @@ public class SatelliteService {
 
     public Satellite getSatellite(Long id) {
         return repository.findById(id).orElse(null);
+    }
+
+    //clears all data before a new dataset is loaded, to stop satellites stacking up
+    //order matters: alerts reference predictions, and predictions reference satellites
+    public void deleteAllData() {
+        alertRepository.deleteAll();
+        collisionPredictionRepository.deleteAll();
+        repository.deleteAll();
     }
 }
