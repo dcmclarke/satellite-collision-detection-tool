@@ -110,10 +110,15 @@ public class SpaceTrackApiService {
             log.info(result);
             return result;
 
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             String error = "Error fetching Space-Track data: " + e.getMessage();
             log.error("Error fetching Space-Track data", e);
             return error;
+        } catch (InterruptedException e) {
+            //restore the interrupt flag so the calling thread can still see it was interrupted
+            Thread.currentThread().interrupt();
+            log.error("Space-Track fetch was interrupted", e);
+            return "Space-Track fetch was interrupted";
         }
     }
 
