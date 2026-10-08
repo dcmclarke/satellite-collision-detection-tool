@@ -5,6 +5,7 @@ import com.satellitesystem.collisiondetection.repository.AlertRepository;
 import com.satellitesystem.collisiondetection.repository.CollisionPredictionRepository;
 import com.satellitesystem.collisiondetection.repository.SatelliteRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
@@ -33,6 +34,8 @@ public class SatelliteService {
 
     //clears all data before a new dataset is loaded, to stop satellites stacking up
     //order matters: alerts reference predictions, and predictions reference satellites
+    //one transaction, so either all three tables are cleared or none are
+    @Transactional
     public void deleteAllData() {
         alertRepository.deleteAll();
         collisionPredictionRepository.deleteAll();

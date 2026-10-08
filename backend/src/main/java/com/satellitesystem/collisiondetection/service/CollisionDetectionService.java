@@ -7,6 +7,7 @@ import com.satellitesystem.collisiondetection.repository.CollisionPredictionRepo
 import com.satellitesystem.collisiondetection.model.Alert;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.satellitesystem.collisiondetection.repository.AlertRepository;
@@ -49,6 +50,8 @@ public class CollisionDetectionService {
 
     //main method detecitn all potential collisions in satellite population
     //checks every pair of satellites for proximity within collision threshold
+    //runs in one transaction so a failure part way through rolls back the deletes too
+    @Transactional
     public List<CollisionPrediction> detectCollisions() {
         log.info("Starting collision detection");
 
@@ -92,11 +95,7 @@ public class CollisionDetectionService {
         log.info("Checked {} satellite pairs", pairsChecked);
         log.info("Found {} potential collisions", predictions.size());
 
-        //save all predictions to db
-        if (!predictions.isEmpty()) {
-            collisionRepository.saveAll(predictions);
-            log.info("Saved {} collision predictions to database", predictions.size());
-        }
+        //each prediction is already saved in createPrediction(), so no saveAll() is needed here
         return predictions;
     }
 
@@ -138,6 +137,7 @@ public class CollisionDetectionService {
         }
 
         prediction.setStatus("ACTIVE");
+        //saved here (not at the end) because the alert below must reference a saved prediction
         prediction = collisionRepository.save(prediction);
 
         Alert alert = createAlert(prediction);
