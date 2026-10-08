@@ -1,5 +1,6 @@
 package com.satellitesystem.collisiondetection.service;
 
+import com.satellitesystem.collisiondetection.exception.ResourceNotFoundException;
 import com.satellitesystem.collisiondetection.model.Alert;
 import com.satellitesystem.collisiondetection.repository.AlertRepository;
 import org.springframework.stereotype.Service;
@@ -53,11 +54,9 @@ public class AlertService {
     }
 
     public Alert acknowledgeAlert(Long id) {
-        Alert alert = repository.findById(id).orElse(null);
-        if (alert != null) {
-            alert.setAcknowledged(true);
-            return repository.save(alert);
-        }
-        return null;
+        Alert alert = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Alert not found: " + id));
+        alert.setAcknowledged(true);
+        return repository.save(alert);
     }
 }

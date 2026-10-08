@@ -1,5 +1,6 @@
 package com.satellitesystem.collisiondetection.service;
 
+import com.satellitesystem.collisiondetection.exception.SpaceTrackException;
 import com.satellitesystem.collisiondetection.model.Satellite;
 import com.satellitesystem.collisiondetection.repository.SatelliteRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,7 +43,8 @@ public class SpaceTrackApiService {
     }
 
     //fetches sat data from Space-Track.org api, up to 500 sats (see limit in dataUrl)
-    public String fetchAndStoreSatellites() {
+    //returns how many were saved, or throws SpaceTrackException if Space-Track can't be used
+    public int fetchAndStoreSatellites() {
         log.info("Starting Space-Track API fetch");
 
         try {
@@ -77,7 +79,7 @@ public class SpaceTrackApiService {
             //check if login succeeded
             if (loginResponse.body().contains("\"Login\":\"Failed\"")) {
                 log.warn("Space-Track login failed - check the configured username and password");
-                return "Login failed - check your username and password";
+                throw new SpaceTrackException("Space-Track login failed - check the configured username and password");
             }
 
             log.info("Space-Track login successful");
@@ -98,27 +100,24 @@ public class SpaceTrackApiService {
             log.info("Space-Track data response status: {}", dataResponse.statusCode());
 
             if (dataResponse.statusCode() != 200) {
-                return "Data fetch failed with status: " + dataResponse.statusCode()
-                        + " - Response: " + dataResponse.body();
+                throw new SpaceTrackException("Space-Track data request failed with status " + dataResponse.statusCode());
             }
 
             log.info("Data received, parsing");
 
             int count = parseSatelliteData(dataResponse.body());
 
-            String result = "Successfully fetched " + count + " satellites from Space-Track!";
-            log.info(result);
-            return result;
+            log.info("Successfully fetched {} satellites from Space-Track", count);
+            return count;
 
         } catch (IOException e) {
-            String error = "Error fetching Space-Track data: " + e.getMessage();
             log.error("Error fetching Space-Track data", e);
-            return error;
+            throw new SpaceTrackException("Could not reach Space-Track: " + e.getMessage(), e);
         } catch (InterruptedException e) {
             //restore the interrupt flag so the calling thread can still see it was interrupted
             Thread.currentThread().interrupt();
             log.error("Space-Track fetch was interrupted", e);
-            return "Space-Track fetch was interrupted";
+            throw new SpaceTrackException("Space-Track fetch was interrupted", e);
         }
     }
 
@@ -174,12 +173,12 @@ public class SpaceTrackApiService {
      *
      * TLE data snapshot: October 2024, sourced from Space-Track.org
      */
-    public String loadBackupData() {
+    //returns how many satellites were saved
+    public int loadBackupData() {
         log.info("Loading backup satellite data for demonstration");
 
-        try {
-            //leo satellites with known proximity for collision detection demo
-            String backupData = """
+        //leo satellites with known proximity for collision detection demo
+        String backupData = """
         [
           {"OBJECT_NAME": "ISS (ZARYA)", "NORAD_CAT_ID": "25544", 
            "INCLINATION": "51.6416", "RA_OF_ASC_NODE": "247.4627", "MEAN_MOTION": "15.50103472"},
@@ -192,12 +191,6 @@ public class SpaceTrackApiService {
         ]
         """;
 
-            int count = parseSatelliteData(backupData);
-            return "Loaded " + count + " satellites from backup dataset (demo mode)";
-
-        } catch (Exception e) {
-            log.error("Backup data loading failed", e);
-            return "Error loading backup data";
-        }
+        return parseSatelliteData(backupData);
     }
 }

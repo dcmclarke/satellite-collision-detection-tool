@@ -33,8 +33,7 @@ public class AlertController {
 
     @PostMapping("/{id}/acknowledge")
     public AlertResponse acknowledgeAlert(@PathVariable Long id) {
-        Alert alert = service.acknowledgeAlert(id);
-        return alert == null ? null : AlertResponse.from(alert);
+        return AlertResponse.from(service.acknowledgeAlert(id));
     }
 
     //get in memory alerts (for demo)

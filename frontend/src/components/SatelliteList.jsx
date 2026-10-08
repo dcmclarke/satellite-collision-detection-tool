@@ -4,6 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDatabase, faSatellite, faPlay, faSearch, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import './SatelliteList.css';
 
+//prefer the backend's JSON error message (e.g. a Space-Track failure) over axios's generic one
+const errorMessage = (err) => err.response?.data?.message || err.message;
+
 function SatelliteList() {
   const [satellites, setSatellites] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -37,12 +40,12 @@ function SatelliteList() {
     setMessageType('info');
     try {
       const response = await satelliteApi.loadBackupData();
-      setMessage(`${response.data}`);
+      setMessage(response.data.message);
       setMessageType('success');
       await new Promise(resolve => setTimeout(resolve, 2000));
       await loadSatellites();
     } catch (err) {
-      setMessage(`Error: ${err.message}`);
+      setMessage(`Error: ${errorMessage(err)}`);
       setMessageType('error');
     } finally {
       setLoading(false);
@@ -61,10 +64,10 @@ function SatelliteList() {
     setMessageType('info');
     try {
       const response = await satelliteApi.detectCollisions();
-      setMessage(`${response.data}`);
+      setMessage(response.data.message);
       setMessageType('success');
     } catch (err) {
-      setMessage(`${err.message}`);
+      setMessage(errorMessage(err));
       setMessageType('error');
     } finally {
       setLoading(false);
@@ -86,12 +89,12 @@ function SatelliteList() {
 
     try {
       const response = await satelliteApi.fetchSpaceTrackData();
-      setMessage(`${response.data}`);
+      setMessage(response.data.message);
       setMessageType('success');
       await new Promise(resolve => setTimeout(resolve, 5000));
       await loadSatellites();
     } catch (error) {
-      setMessage(`Error: ${error.message}`);
+      setMessage(`Error: ${errorMessage(error)}`);
       setMessageType('error');
     } finally {
       setLoading(false);

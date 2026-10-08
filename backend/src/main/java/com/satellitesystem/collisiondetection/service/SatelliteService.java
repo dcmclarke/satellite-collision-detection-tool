@@ -1,5 +1,6 @@
 package com.satellitesystem.collisiondetection.service;
 
+import com.satellitesystem.collisiondetection.exception.ResourceNotFoundException;
 import com.satellitesystem.collisiondetection.model.Satellite;
 import com.satellitesystem.collisiondetection.repository.AlertRepository;
 import com.satellitesystem.collisiondetection.repository.CollisionPredictionRepository;
@@ -29,7 +30,8 @@ public class SatelliteService {
     }
 
     public Satellite getSatellite(Long id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Satellite not found: " + id));
     }
 
     //clears all data before a new dataset is loaded, to stop satellites stacking up
