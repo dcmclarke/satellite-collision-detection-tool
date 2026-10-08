@@ -1,6 +1,6 @@
 package com.satellitesystem.collisiondetection.controller;
 
-import com.satellitesystem.collisiondetection.model.CollisionPrediction;
+import com.satellitesystem.collisiondetection.dto.CollisionPredictionResponse;
 import com.satellitesystem.collisiondetection.service.CollisionPredictionService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -16,12 +16,12 @@ public class CollisionPredictionController {
     }
 
     @GetMapping("/active")
-    public List<CollisionPrediction> getActiveCollisions() {
-        return service.getActivePredictions();
+    public List<CollisionPredictionResponse> getActiveCollisions() {
+        return service.getActivePredictions().stream().map(CollisionPredictionResponse::from).toList();
     }
 
     @GetMapping("/critical")
-    public List<CollisionPrediction> getCriticalCollisions() {
-        return service.getCriticalPredictions();
+    public List<CollisionPredictionResponse> getCriticalCollisions() {
+        return service.getCriticalPredictions().stream().map(CollisionPredictionResponse::from).toList();
     }
 }

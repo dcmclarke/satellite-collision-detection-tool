@@ -1,5 +1,6 @@
 package com.satellitesystem.collisiondetection.controller;
 
+import com.satellitesystem.collisiondetection.dto.SatelliteResponse;
 import com.satellitesystem.collisiondetection.model.CollisionPrediction;
 import com.satellitesystem.collisiondetection.model.Satellite;
 import com.satellitesystem.collisiondetection.service.CollisionDetectionService;
@@ -35,13 +36,14 @@ public class SatelliteController {
     }
 
     @GetMapping
-    public List<Satellite> getAllSatellites() {
-        return service.getAllSatellites();
+    public List<SatelliteResponse> getAllSatellites() {
+        return service.getAllSatellites().stream().map(SatelliteResponse::from).toList();
     }
 
     @GetMapping("/{id}")
-    public Satellite getSatellite(@PathVariable Long id) {
-        return service.getSatellite(id);
+    public SatelliteResponse getSatellite(@PathVariable Long id) {
+        Satellite satellite = service.getSatellite(id);
+        return satellite == null ? null : SatelliteResponse.from(satellite);
     }
 
     /*PRIMARY METHOD: fetches live data from Space-Track api
