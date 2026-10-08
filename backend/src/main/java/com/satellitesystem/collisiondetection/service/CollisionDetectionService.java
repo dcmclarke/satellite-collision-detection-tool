@@ -7,6 +7,8 @@ import com.satellitesystem.collisiondetection.repository.CollisionPredictionRepo
 import com.satellitesystem.collisiondetection.model.Alert;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.satellitesystem.collisiondetection.repository.AlertRepository;
 
 import java.time.LocalDateTime;
@@ -17,6 +19,9 @@ import java.util.List;
 
 @Service
 public class CollisionDetectionService {
+
+    private static final Logger log = LoggerFactory.getLogger(CollisionDetectionService.class);
+
    //distance thresholds (km)
     private static final double COLLISION_THRESHOLD = 5.0;
     private static final double CRITICAL_DISTANCE = 2.0; // <2km = critical
@@ -45,21 +50,21 @@ public class CollisionDetectionService {
     //main method detecitn all potential collisions in satellite population
     //checks every pair of satellites for proximity within collision threshold
     public List<CollisionPrediction> detectCollisions() {
-        System.out.println("Starting collision detection...");
+        log.info("Starting collision detection");
 
         //delete alerts first (they ref collision predictions)
-        System.out.println("Clearing old alerts...");
+        log.debug("Clearing old alerts");
         alertRepository.deleteAll();
 
         //delete collision predictions
-        System.out.println("Clearing old predictions to avoid duplicates...");
+        log.debug("Clearing old predictions to avoid duplicates");
         collisionRepository.deleteAll();
 
         //get all satellites from db
         List<Satellite> satellites = satelliteRepository.findAll();
         List<CollisionPrediction> predictions = new ArrayList<>();
 
-        System.out.println("Analysing " + satellites.size() + " satellites...");
+        log.info("Analysing {} satellites", satellites.size());
 
         //check every unique pair of satellites
         //currently using nested loop for 11 satellites, checking 55 pairs (n*(n-1)/2)
@@ -79,18 +84,18 @@ public class CollisionDetectionService {
                     CollisionPrediction prediction = createPrediction(sat1, sat2, distance);
                     predictions.add(prediction);
 
-                    System.out.println("COLLISION RISK: " + sat1.getName() + " and " + sat2.getName() + " are " + String.format("%.2f", distance) + " km apart!");
+                    log.info("COLLISION RISK: {} and {} are {} km apart", sat1.getName(), sat2.getName(), String.format("%.2f", distance));
                 }
             }
         }
 
-        System.out.println("Checked " + pairsChecked + " satellite pairs");
-        System.out.println("Found " + predictions.size() + " potential collisions");
+        log.info("Checked {} satellite pairs", pairsChecked);
+        log.info("Found {} potential collisions", predictions.size());
 
         //save all predictions to db
         if (!predictions.isEmpty()) {
             collisionRepository.saveAll(predictions);
-            System.out.println("Saved " + predictions.size() + " collision prediction to database");
+            log.info("Saved {} collision predictions to database", predictions.size());
         }
         return predictions;
     }

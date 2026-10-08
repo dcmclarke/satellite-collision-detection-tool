@@ -4,6 +4,8 @@ import com.satellitesystem.collisiondetection.model.Satellite;
 import com.satellitesystem.collisiondetection.repository.SatelliteRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -22,6 +24,8 @@ import java.util.List;
 @Service
 public class SpaceTrackApiService {
 
+    private static final Logger log = LoggerFactory.getLogger(SpaceTrackApiService.class);
+
     private final SatelliteRepository satelliteRepository;
     private final String username;
     private final String password;
@@ -39,7 +43,7 @@ public class SpaceTrackApiService {
 
     //fetches sat data from Space-Track.org api, gets latest 100 sats for testing
     public String fetchAndStoreSatellites() {
-        System.out.println("Starting Space-Track API fetch please wait...");
+        log.info("Starting Space-Track API fetch");
 
         try {
             //create cookie manager
@@ -55,7 +59,7 @@ public class SpaceTrackApiService {
 
             //step 1: login using /ajaxauth/login (like the Python client does)
             String loginUrl = "https://www.space-track.org/ajaxauth/login";
-            System.out.println("Logging in to Space-Track...");
+            log.info("Logging in to Space-Track");
 
             String loginBody = "identity=" + URLEncoder.encode(username, StandardCharsets.UTF_8)
                     + "&password=" + URLEncoder.encode(password, StandardCharsets.UTF_8);
@@ -68,19 +72,20 @@ public class SpaceTrackApiService {
 
             HttpResponse<String> loginResponse = client.send(loginRequest, HttpResponse.BodyHandlers.ofString());
 
-            System.out.println("Login response: " + loginResponse.statusCode());
+            log.info("Space-Track login response status: {}", loginResponse.statusCode());
 
             //check if login succeeded
             if (loginResponse.body().contains("\"Login\":\"Failed\"")) {
+                log.warn("Space-Track login failed - check the configured username and password");
                 return "Login failed - check your username and password";
             }
 
-            System.out.println("Login successful!");
+            log.info("Space-Track login successful");
 
             //step 2: fetch satellite data
             //get 500 active satellites (updated in last 30 days)
             String dataUrl = apiUrl + "/basicspacedata/query/class/gp/decay_date/null-val/epoch/%3Enow-30/orderby/norad_cat_id/limit/500/format/json";
-            System.out.println("Fetching satellite data...");
+            log.info("Fetching satellite data");
 
             HttpRequest dataRequest = HttpRequest.newBuilder()
                     .uri(URI.create(dataUrl))
@@ -90,25 +95,24 @@ public class SpaceTrackApiService {
 
             HttpResponse<String> dataResponse = client.send(dataRequest, HttpResponse.BodyHandlers.ofString());
 
-            System.out.println("Data response: " + dataResponse.statusCode());
+            log.info("Space-Track data response status: {}", dataResponse.statusCode());
 
             if (dataResponse.statusCode() != 200) {
                 return "Data fetch failed with status: " + dataResponse.statusCode()
                         + " - Response: " + dataResponse.body();
             }
 
-            System.out.println("Data received! Parsing...");
+            log.info("Data received, parsing");
 
             int count = parseSatelliteData(dataResponse.body());
 
             String result = "Successfully fetched " + count + " satellites from Space-Track!";
-            System.out.println(result);
+            log.info(result);
             return result;
 
         } catch (IOException | InterruptedException e) {
             String error = "Error fetching Space-Track data: " + e.getMessage();
-            System.err.println(error);
-            e.printStackTrace();
+            log.error("Error fetching Space-Track data", e);
             return error;
         }
     }
@@ -138,18 +142,17 @@ public class SpaceTrackApiService {
 
                 //print first sat as example
                 if (satellites.size() == 1) {
-                    System.out.println("Example satellite: " + satellite.getName());
+                    log.debug("Example satellite: {}", satellite.getName());
                 }
             }
 
             //save all to db at once
             satelliteRepository.saveAll(satellites);
-            System.out.println("Saved " + satellites.size() + " satellites to database");
+            log.info("Saved {} satellites to database", satellites.size());
 
             return satellites.size();
         } catch (Exception e) {
-            System.err.println("Error parsing satellite data: " + e.getMessage());
-            e.printStackTrace();
+            log.error("Error parsing satellite data", e);
             return 0;
         }
     }
@@ -167,7 +170,7 @@ public class SpaceTrackApiService {
      * TLE data snapshot: October 2024, sourced from Space-Track.org
      */
     public String loadBackupData() {
-        System.out.println("Loading backup satellite data for demonstration...");
+        log.info("Loading backup satellite data for demonstration");
 
         try {
             //leo satellites with known proximity for collision detection demo
@@ -188,7 +191,7 @@ public class SpaceTrackApiService {
             return "Loaded " + count + " satellites from backup dataset (demo mode)";
 
         } catch (Exception e) {
-            System.err.println("Backup data loading failed: " + e.getMessage());
+            log.error("Backup data loading failed", e);
             return "Error loading backup data";
         }
     }
