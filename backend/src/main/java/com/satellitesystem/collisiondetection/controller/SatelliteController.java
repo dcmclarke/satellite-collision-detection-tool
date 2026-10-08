@@ -51,9 +51,7 @@ public class SatelliteController {
     */
     @PostMapping("/fetch-spacetrack-data")
     public ResponseEntity<MessageResponse> fetchSpaceTrackData() {
-        //clear all data first to fix the satellite stacking issue
-        service.deleteAllData();
-
+        //replaces the old data only after a successful download
         //throws SpaceTrackException on failure, which GlobalExceptionHandler turns into a 502
         int count = spaceTrackApiService.fetchAndStoreSatellites();
         long totalCount = spaceTrackApiService.getSatelliteCount();
@@ -69,9 +67,6 @@ public class SatelliteController {
 
     @PostMapping("/load-backup-data")
     public ResponseEntity<MessageResponse> loadBackupData() {
-        //clear all data first to fix the satellite stacking issue
-        service.deleteAllData();
-
         int count = spaceTrackApiService.loadBackupData();
         long totalCount = spaceTrackApiService.getSatelliteCount();
         return ResponseEntity.ok(new MessageResponse("Loaded " + count

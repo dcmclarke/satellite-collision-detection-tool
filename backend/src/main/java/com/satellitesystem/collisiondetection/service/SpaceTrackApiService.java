@@ -28,15 +28,18 @@ public class SpaceTrackApiService {
     private static final Logger log = LoggerFactory.getLogger(SpaceTrackApiService.class);
 
     private final SatelliteRepository satelliteRepository;
+    private final SatelliteService satelliteService;
     private final String username;
     private final String password;
     private final String apiUrl;
 
     public SpaceTrackApiService(SatelliteRepository satelliteRepository,
+                                SatelliteService satelliteService,
                                 @Value("${spacetrack.api.username}") String username,
                                 @Value("${spacetrack.api.password}") String password,
                                 @Value("${spacetrack.api.url}") String apiUrl) {
         this.satelliteRepository = satelliteRepository;
+        this.satelliteService = satelliteService;
         this.username = username;
         this.password = password;
         this.apiUrl = apiUrl;
@@ -105,6 +108,8 @@ public class SpaceTrackApiService {
 
             log.info("Data received, parsing");
 
+            //only clear the old data now that the new data has downloaded, so a failed fetch keeps the old dataset
+            satelliteService.deleteAllData();
             int count = parseSatelliteData(dataResponse.body());
 
             log.info("Successfully fetched {} satellites from Space-Track", count);
@@ -191,6 +196,8 @@ public class SpaceTrackApiService {
         ]
         """;
 
+        //clear old data first to stop satellites stacking up
+        satelliteService.deleteAllData();
         return parseSatelliteData(backupData);
     }
 }
