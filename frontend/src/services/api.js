@@ -15,8 +15,8 @@ export const satelliteApi = {
     return axios.post(`${API_BASE}/satellites/detect-collisions`);
   },
 
-  fetchNasaData: () => {
-  return axios.post(`${API_BASE}/satellites/fetch-nasa-data`);
+  fetchSpaceTrackData: () => {
+  return axios.post(`${API_BASE}/satellites/fetch-spacetrack-data`);
   },
 };
 

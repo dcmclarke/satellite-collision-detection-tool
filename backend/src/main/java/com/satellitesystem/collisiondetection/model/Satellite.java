@@ -11,7 +11,7 @@ public class Satellite {
 
     private String name;
 
-    //NASA NORAD catalog no. uniquely identifying each satellite
+    //NORAD catalog no. uniquely identifying each satellite
     private String noradId;
 
     //orbital position in degrees

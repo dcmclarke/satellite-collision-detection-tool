@@ -14,7 +14,7 @@ function Guide() {
           <h2>Getting Started</h2>
           <ol>
             <li>Navigate to the Satellites page</li>
-            <li>Then click either Load Backup Data (4 satellites in case API down) or Fetch NASA Data (500 satellites)</li>
+            <li>Then click either Load Backup Data (4 satellites in case API down) or Fetch Space-Track Data (500 satellites)</li>
             <li>Data will take a few seconds to load and you'll see a table of satellites</li>
             <li>Click Run Collision Detection</li>
             <li>Continue onto Warnigns page to view results or Alert page to acknowledge alerts</li>
@@ -44,7 +44,7 @@ function Guide() {
           
           <h3>Satellites Page</h3>
           <p><strong>Load Backup Data:</strong> Loads 4 pre-configured satellites for quick testing</p>
-          <p><strong>Fetch NASA Data:</strong> Downloads real-time data from NASA Space-Track (takes 5-10 seconds)</p>
+          <p><strong>Fetch Space-Track Data:</strong> Downloads real-time data from Space-Track (takes 5-10 seconds)</p>
           <p><strong>Run Collision Detection:</strong> Analyses all satellite pairs for potential collisions</p>
           <p><strong>Search:</strong> Filter satellites by name or NORAD ID</p>
           <p><strong>Table Headers:</strong> Click to sort by that column</p>
@@ -62,7 +62,7 @@ function Guide() {
         <section className="guide-section">
           <h2>Technical Details</h2>
           <p><strong>Algorithm:</strong> Distance-based collision detection using 3D Euclidean distance calculation</p>
-          <p><strong>Data Source:</strong> NASA Space-Track.org TLE (Two-Line Element) orbital data</p>
+          <p><strong>Data Source:</strong> Space-Track.org TLE (Two-Line Element) orbital data</p>
           <p><strong>Update Frequency:</strong> Manually done click buttons to refresh data</p>
           <p><strong>Threshold:</strong> Detects satellites within 5km of each other</p>
         </section>
