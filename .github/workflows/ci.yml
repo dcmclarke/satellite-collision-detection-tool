@@ -1,4 +1,4 @@
-name: Backend CI
+name: CI
 
 # every push to any branch is tested; pull requests show the result for their head commit
 on:
@@ -10,6 +10,7 @@ env:
 
 jobs:
   build-and-test:
+    name: Backend (build and test)
     runs-on: ubuntu-latest
 
     services:
@@ -52,3 +53,36 @@ jobs:
           SPACETRACK_API_PASSWORD: dummy
           SPACETRACK_API_URL: https://www.space-track.org
         run: ./mvnw -B clean test
+
+  frontend:
+    name: Frontend (test and build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      # npm ci installs exactly what package-lock.json lists, so CI uses the same versions as a local install
+      - name: Install dependencies
+        run: npm ci
+
+      # CI=true makes the tests run once instead of watching, and makes the build fail on lint warnings
+      - name: Run tests
+        run: npm test -- --watchAll=false
+        env:
+          CI: true
+
+      - name: Build
+        run: npm run build
+        env:
+          CI: true
