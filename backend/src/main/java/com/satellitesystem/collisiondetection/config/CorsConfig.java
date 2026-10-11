@@ -14,7 +14,8 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                     .allowedOriginPatterns("http://localhost:3000", "https://*.netlify.app")
-                    .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
+                    //only the methods the API actually has; OPTIONS is the browser's CORS preflight request
+                    .allowedMethods("GET", "POST", "OPTIONS");
             }
         };
     }
