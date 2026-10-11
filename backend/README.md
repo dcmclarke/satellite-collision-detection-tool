@@ -43,8 +43,10 @@ spacetrack.api.password=YOUR_SPACETRACK_PASSWORD
 ### 3. Start Backend (Terminal 1)
 
 ```bash
-./mvnw spring-boot:run
+./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
 ```
+
+The `dev` profile turns on the data-loading endpoints, which are off by default.
 
 Backend will start on http://localhost:8080
 

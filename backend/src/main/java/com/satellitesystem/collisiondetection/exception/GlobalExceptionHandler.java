@@ -22,6 +22,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(new ErrorResponse(e.getMessage()));
     }
 
+    //403 Forbidden: the request is understood, but this server doesn't allow it
+    @ExceptionHandler(ManualRefreshDisabledException.class)
+    public ResponseEntity<ErrorResponse> handleManualRefreshDisabled(ManualRefreshDisabledException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorResponse(e.getMessage()));
+    }
+
     //429 Too Many Requests, with the standard Retry-After header (in seconds) telling the client when to try again
     @ExceptionHandler(FetchTooSoonException.class)
     public ResponseEntity<ErrorResponse> handleFetchTooSoon(FetchTooSoonException e) {

@@ -167,10 +167,12 @@ spacetrack.api.password=YOUR_SPACETRACK_PASSWORD
 
 ```sh
 cd backend
-./mvnw spring-boot:run
+./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
 The API will be available at `http://localhost:8080`. Keep this terminal running.
+
+The `dev` profile turns on the buttons that load and replace data. They're off by default, because the API has no login and anyone could otherwise wipe the data or use up your Space-Track quota. In IntelliJ, set **Active profiles** to `dev` in the run configuration.
 
 **5. Install and start the frontend (Terminal 2)**
 

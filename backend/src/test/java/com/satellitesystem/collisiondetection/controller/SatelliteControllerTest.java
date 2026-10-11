@@ -23,7 +23,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 //loads only the web layer (controller + GlobalExceptionHandler) with mocked services, so no database is needed
-@WebMvcTest(SatelliteController.class)
+//manual refresh is switched on here; SatelliteControllerRefreshDisabledTest covers it being off
+@WebMvcTest(controllers = SatelliteController.class, properties = "app.manual-data-refresh.enabled=true")
 class SatelliteControllerTest {
 
     @Autowired
