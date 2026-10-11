@@ -52,3 +52,18 @@ test('shows the message from the backend when a request is refused', async () =>
 
   expect(await screen.findByText('Error: Manual data refresh is turned off on this server.')).toBeInTheDocument();
 });
+
+test('after loading backup data, shows the success message and the new satellites', async () => {
+  // the first call is the initial page load (empty), the second is the refresh after loading
+  satelliteApi.getAllSatellites
+    .mockResolvedValueOnce({ data: [] })
+    .mockResolvedValueOnce({ data: satellites });
+  satelliteApi.loadBackupData.mockResolvedValue({ data: { message: 'Loaded 2 satellites from backup dataset (demo mode).' } });
+  render(<SatelliteList />);
+  await screen.findByText('No Satellite Data Loaded');
+
+  fireEvent.click(screen.getByText('Load Backup Data'));
+
+  expect(await screen.findByText('ISS (ZARYA)')).toBeInTheDocument();
+  expect(screen.getByText('Loaded 2 satellites from backup dataset (demo mode).')).toBeInTheDocument();
+});
