@@ -63,7 +63,7 @@ public class SpaceTrackApiService {
                     .build();
 
             //step 1: login using /ajaxauth/login (like the Python client does)
-            String loginUrl = "https://www.space-track.org/ajaxauth/login";
+            String loginUrl = apiUrl + "/ajaxauth/login";
             log.info("Logging in to Space-Track");
 
             String loginBody = "identity=" + URLEncoder.encode(username, StandardCharsets.UTF_8)
