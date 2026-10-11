@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -64,7 +65,10 @@ class SpaceTrackApiServiceTest {
         satelliteRepository = mock(SatelliteRepository.class);
         satelliteService = mock(SatelliteService.class);
         String baseUrl = "http://localhost:" + fakeSpaceTrack.getAddress().getPort();
-        service = new SpaceTrackApiService(satelliteRepository, satelliteService, "test-user", "test-password", baseUrl);
+        //zero interval: the cooldown has its own tests, here every fetch should go through
+        FetchCooldown noCooldown = new FetchCooldown(Duration.ZERO);
+        service = new SpaceTrackApiService(satelliteRepository, satelliteService, noCooldown,
+                "test-user", "test-password", baseUrl);
     }
 
     @AfterEach

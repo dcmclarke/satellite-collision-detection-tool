@@ -1,6 +1,7 @@
 package com.satellitesystem.collisiondetection.exception;
 
 import com.satellitesystem.collisiondetection.dto.ErrorResponse;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,5 +20,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(SpaceTrackException.class)
     public ResponseEntity<ErrorResponse> handleSpaceTrackFailure(SpaceTrackException e) {
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(new ErrorResponse(e.getMessage()));
+    }
+
+    //429 Too Many Requests, with the standard Retry-After header (in seconds) telling the client when to try again
+    @ExceptionHandler(FetchTooSoonException.class)
+    public ResponseEntity<ErrorResponse> handleFetchTooSoon(FetchTooSoonException e) {
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
+                .header(HttpHeaders.RETRY_AFTER, String.valueOf(e.getRetryAfter().toSeconds()))
+                .body(new ErrorResponse(e.getMessage()));
     }
 }

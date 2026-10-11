@@ -29,17 +29,20 @@ public class SpaceTrackApiService {
 
     private final SatelliteRepository satelliteRepository;
     private final SatelliteService satelliteService;
+    private final FetchCooldown fetchCooldown;
     private final String username;
     private final String password;
     private final String apiUrl;
 
     public SpaceTrackApiService(SatelliteRepository satelliteRepository,
                                 SatelliteService satelliteService,
+                                FetchCooldown fetchCooldown,
                                 @Value("${spacetrack.api.username}") String username,
                                 @Value("${spacetrack.api.password}") String password,
                                 @Value("${spacetrack.api.url}") String apiUrl) {
         this.satelliteRepository = satelliteRepository;
         this.satelliteService = satelliteService;
+        this.fetchCooldown = fetchCooldown;
         this.username = username;
         this.password = password;
         this.apiUrl = apiUrl;
@@ -47,7 +50,9 @@ public class SpaceTrackApiService {
 
     //fetches sat data from Space-Track.org api, up to 500 sats (see limit in dataUrl)
     //returns how many were saved, or throws SpaceTrackException if Space-Track can't be used
+    //throws FetchTooSoonException without contacting Space-Track if the last fetch was too recent
     public int fetchAndStoreSatellites() {
+        fetchCooldown.acquire();
         log.info("Starting Space-Track API fetch");
 
         try {
