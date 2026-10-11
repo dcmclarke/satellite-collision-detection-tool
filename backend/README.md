@@ -23,22 +23,27 @@ CREATE DATABASE satellitedb;
 \q
 ```
 
-### 2. Configure Application Properties
+### 2. Set Your Credentials
 
-Copy the example configuration:
+Credentials are read from **environment variables**. Don't type them into `application.properties`: that file is tracked by git, so a password saved there is one `git add` away from being published.
 
-```bash
-cd backend
-cp src/main/resources/templates/application-example.properties src/main/resources/application.properties
+macOS / Linux / Git Bash:
+
+```sh
+export SPACETRACK_API_USERNAME=your-username
+export SPACETRACK_API_PASSWORD=your-password
+export SPRING_DATASOURCE_PASSWORD=your-postgres-password   # only if it isn't "postgres"
 ```
 
-Edit `application.properties` and set your credentials:
+Windows PowerShell:
 
-```properties
-spring.datasource.password=YOUR_POSTGRES_PASSWORD
-spacetrack.api.username=YOUR_SPACETRACK_USERNAME
-spacetrack.api.password=YOUR_SPACETRACK_PASSWORD
+```powershell
+$env:SPACETRACK_API_USERNAME = "your-username"
+$env:SPACETRACK_API_PASSWORD = "your-password"
+$env:SPRING_DATASOURCE_PASSWORD = "your-postgres-password"   # only if it isn't "postgres"
 ```
+
+In IntelliJ, add the same variables under **Run → Edit Configurations → Environment variables**. For docker-compose, copy `.env.example` to `.env` (git ignores it) and fill it in.
 
 ### 3. Start Backend (Terminal 1)
 

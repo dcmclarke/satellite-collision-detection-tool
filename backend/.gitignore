@@ -31,6 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-#prevent real credentials commit
-src/main/resources/application.properties

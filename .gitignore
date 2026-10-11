@@ -1,0 +1,4 @@
+# environment files hold real credentials (docker-compose reads .env automatically)
+.env
+.env.*
+!.env.example
