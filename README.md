@@ -22,7 +22,7 @@
 <details>
   <summary>Table of Contents</summary>
   <ol>
-    <li><a href="#project-status">Project Status</a></li>
+    <li><a href="#project-status">Project Status &amp; Roadmap</a></li>
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#built-with">Built With</a></li>
     <li><a href="#deployment">Deployment</a></li>
@@ -31,13 +31,14 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
+        <li><a href="#configuration">Configuration</a></li>
+        <li><a href="#running-the-tests">Running the Tests</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#how-it-works">How It Works</a></li>
     <li><a href="#project-structure">Project Structure</a></li>
     <li><a href="#api-reference">API Reference</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -49,13 +50,24 @@
 
 The hosted deployment is currently offline while the project is being reworked, so there is no live demo at the moment. The screenshots below show the app running, and you can run it locally by following [Getting Started](#getting-started).
 
-**Scope and known issues (v1.0)**
+**What it is today**
 
-- v1.0 was built as 12-week coursework. It is an educational demo, not an operational conjunction-assessment tool.
-- There is no SGP4 orbital propagation. Satellites are compared at a single point, with no time dimension.
-- **Known issue:** the orbital elements from Space-Track are mapped to positions incorrectly. Inclination is stored as latitude, right ascension of the ascending node as longitude, and mean motion × 100 as altitude. The computed distances are therefore illustrative only and don't reflect real separations.
-- The "probability" shown for each warning is a fixed score per risk tier, not a calculated collision probability.
-- A rebuild is in progress to fix these issues. The original coursework version is preserved at the [`v1.0-coursework`](https://github.com/dcmclarke/satellite-collision-detection-tool/tree/v1.0-coursework) tag.
+- v1.0 was built as 12-week coursework and is preserved at the [`v1.0-coursework`](https://github.com/dcmclarke/satellite-collision-detection-tool/tree/v1.0-coursework) tag. Since then the backend has had a security and code-quality pass ([REVIEW.md](REVIEW.md), [IMPROVEMENTS.md](IMPROVEMENTS.md)).
+- It is an **educational demo**, not an operational conjunction-assessment tool.
+- **What's real:**
+  - live orbital data from Space-Track.org, with fetches limited to once an hour to respect Space-Track's usage rules, and an optional scheduled refresh
+  - consistent JSON errors
+  - automated tests for the backend and frontend on every push
+- **Known issue:** the screening doesn't propagate orbits yet. It compares orbital *elements* as if they were positions: inclination is stored as latitude, right ascension of the ascending node as longitude, and mean motion × 100 as altitude. The computed distances are therefore illustrative only and don't reflect real separations.
+- The "probability" shown for each warning is a fixed score per risk tier, not a calculated collision probability. A real probability needs position uncertainty (covariance), which public TLE data doesn't include.
+
+**Roadmap** (the full plan, with the reasoning, is in [IMPROVEMENTS.md](IMPROVEMENTS.md))
+
+1. ✅ Security and reliability: no public destructive endpoints, transactional detection, rate-limited Space-Track access, CI for backend and frontend
+2. 🚧 Real orbit propagation with [Orekit](https://www.orekit.org/)'s SGP4. The propagator exists and matches the published SGP4 verification case to within 1 m, but the screening doesn't use it yet.
+3. ⬜ Store the orbital elements themselves (OMM/JSON, which supports catalogue numbers above 99,999) instead of pseudo-positions
+4. ⬜ Screen over time: propagate every object over the next 24–72 hours, filter pairs by orbit altitude, then find each close pair's **time of closest approach** and **miss distance**
+5. ⬜ Show the results: closest-approach timeline, relative speed, a 3D view of the two orbits; deploy with the scheduled refresh switched on
 
 ---
 
@@ -114,7 +126,7 @@ Key features:
 
 **Backend:** Dockerized; previously deployed on Render  
 **Frontend:** Previously deployed on Netlify  
-**CI/CD:** GitHub Actions runs tests automatically on every push
+**CI:** GitHub Actions builds and tests the backend (against a real PostgreSQL) and the frontend on every push
 
 The hosted deployment is currently offline (see [Project Status](#project-status)).
 
@@ -150,27 +162,36 @@ CREATE DATABASE satellitedb;
 
 **3. Configure the backend**
 
+Credentials are read from **environment variables**. Don't type them into `application.properties`: that file is tracked by git, so a password saved there is one `git add` away from being published.
+
+macOS / Linux / Git Bash:
+
 ```sh
-cd backend
-cp src/main/resources/templates/application-example.properties src/main/resources/application.properties
+export SPACETRACK_API_USERNAME=your-username
+export SPACETRACK_API_PASSWORD=your-password
+export SPRING_DATASOURCE_PASSWORD=your-postgres-password   # only if it isn't "postgres"
 ```
 
-Edit `application.properties` and fill in your credentials:
+Windows PowerShell:
 
-```properties
-spring.datasource.password=YOUR_POSTGRES_PASSWORD
-spacetrack.api.username=YOUR_SPACETRACK_USERNAME
-spacetrack.api.password=YOUR_SPACETRACK_PASSWORD
+```powershell
+$env:SPACETRACK_API_USERNAME = "your-username"
+$env:SPACETRACK_API_PASSWORD = "your-password"
+$env:SPRING_DATASOURCE_PASSWORD = "your-postgres-password"   # only if it isn't "postgres"
 ```
+
+In IntelliJ, add the same variables under **Run → Edit Configurations → Environment variables**. For docker-compose, copy `.env.example` to `.env` (git ignores it) and fill it in.
 
 **4. Start the backend (Terminal 1)**
 
 ```sh
 cd backend
-./mvnw spring-boot:run
+./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
 The API will be available at `http://localhost:8080`. Keep this terminal running.
+
+The `dev` profile turns on the buttons that load and replace data. They're off by default, because the API has no login and anyone could otherwise wipe the data or use up your Space-Track quota. In IntelliJ, set **Active profiles** to `dev` in the run configuration.
 
 **5. Install and start the frontend (Terminal 2)**
 
@@ -181,6 +202,29 @@ npm start
 ```
 
 The app will open automatically at `http://localhost:3000`.
+
+### Configuration
+
+Everything is set through environment variables (Spring Boot maps them onto `application.properties`):
+
+| Variable | Default | What it does |
+|---|---|---|
+| `SPACETRACK_API_USERNAME` / `SPACETRACK_API_PASSWORD` | *(empty)* | Space-Track.org login |
+| `SPRING_DATASOURCE_URL` / `_USERNAME` / `_PASSWORD` | local `satellitedb`, `postgres` / `postgres` | Database connection |
+| `SPRING_PROFILES_ACTIVE` | *(none)* | `dev` turns on the data buttons for local use |
+| `APP_MANUAL_DATA_REFRESH_ENABLED` | `false` | Same switch without the profile |
+| `SPACETRACK_API_MIN_FETCH_INTERVAL` | `1h` | Minimum time between Space-Track fetches |
+| `SPACETRACK_INGEST_ENABLED` | `false` | Turn on the scheduled refresh (for a deployed server) |
+| `SPACETRACK_INGEST_INTERVAL` | `PT6H` | Time between scheduled refreshes |
+
+### Running the Tests
+
+```sh
+cd backend && ./mvnw test        # backend: unit tests plus integration tests against PostgreSQL
+cd frontend && npm test          # frontend: React Testing Library
+```
+
+> **Warning:** the backend integration tests **delete all data** in the database they connect to. Point them at a separate, empty database (for example `SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/satellitedb_test`), not the one you use for the app. CI uses a throwaway PostgreSQL container.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -194,6 +238,8 @@ The app will open automatically at `http://localhost:3000`.
 4. Navigate to **Alerts** to review and acknowledge alerts
 
 > **Note:** If the Space-Track API is unavailable, use **Load Backup Data**. It includes satellites in similar LEO orbits chosen specifically to demonstrate collision detection.
+
+> **Note:** the three data buttons only work when the backend runs with the `dev` profile (see [Installation](#installation)). **Fetch Space-Track Data** can be used once an hour: Space-Track asks for data no more often than that and can suspend accounts that ask more, so the backend refuses earlier fetches with a message saying how long to wait.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -255,14 +301,19 @@ satellite-collision-detection-tool/
 ├── backend/
 │   └── src/main/java/com/satellitesystem/collisiondetection/
 │       ├── controller/         # REST endpoints (Satellite, Collision, Alert)
+│       ├── dto/                # JSON response records (the API never exposes JPA entities)
+│       ├── exception/          # Custom exceptions + GlobalExceptionHandler (HTTP status mapping)
 │       ├── model/              # JPA entities (Satellite, CollisionPrediction, Alert)
 │       ├── repository/         # Spring Data JPA repositories
+│       ├── propagation/        # SGP4 orbit propagation with Orekit (not used by the screening yet)
 │       ├── service/
 │       │   ├── CollisionDetectionService.java   # Core detection algorithm
-│       │   ├── SpaceTrackApiService.java              # Space-Track.org integration
+│       │   ├── SpaceTrackApiService.java        # Space-Track.org integration
+│       │   ├── FetchCooldown.java               # Once-an-hour limit on Space-Track requests
+│       │   ├── SpaceTrackIngestJob.java         # Optional scheduled refresh
 │       │   ├── AlertService.java
 │       │   └── SatelliteService.java
-│       └── config/             # CORS configuration
+│       └── config/             # CORS and scheduling configuration
 │
 └── frontend/
     └── src/
@@ -293,6 +344,10 @@ Base URL: `http://localhost:8080/api`
 | `POST` | `/satellites/load-backup-data` | Load offline demo dataset |
 | `POST` | `/satellites/detect-collisions` | Run collision detection |
 
+The three `POST` endpoints above replace data and the API has no login, so they return `403` unless `app.manual-data-refresh.enabled=true` (the `dev` profile sets it). `fetch-spacetrack-data` returns `429` with a `Retry-After` header if Space-Track was contacted less than an hour ago.
+
+Errors use one JSON shape, for example `{"message": "Satellite not found: 42"}`, with status `404` (not found), `403` (disabled), `429` (too soon) or `502` (Space-Track failed).
+
 ### Collisions
 
 | Method | Endpoint | Description |
@@ -307,18 +362,6 @@ Base URL: `http://localhost:8080/api`
 | `GET` | `/alerts` | Get all alerts |
 | `GET` | `/alerts/recent` | Get alerts from last 24 hours |
 | `POST` | `/alerts/{id}/acknowledge` | Acknowledge an alert |
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
----
-
-## Roadmap
-
-- [ ] Proper orbital propagation using the SGP4 model
-- [ ] Scheduled automatic data refresh
-- [ ] Email / push notifications for critical alerts
-- [ ] 3D globe visualisation of satellite orbits
-- [ ] Add the frontend to Docker Compose for one-command startup (currently backend + database only)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -349,6 +392,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 ## Acknowledgments
 
 - [Space-Track.org](https://www.space-track.org) (US Space Force) — for providing free access to satellite orbital data
+- [Orekit](https://www.orekit.org/) (CS GROUP, Apache 2.0) — SGP4/SDP4 orbit propagation
+- D. A. Vallado et al., *Revisiting Spacetrack Report #3* (AIAA 2006-6753) — the SGP4 verification cases used in the tests
+- [US Naval Observatory](https://maia.usno.navy.mil/) — leap-second table (`tai-utc.dat`) bundled for Orekit
 - [othneildrew/Best-README-Template](https://github.com/othneildrew/Best-README-Template) — README structure reference
 - [Spring Boot](https://spring.io/projects/spring-boot)
 - [Create React App](https://github.com/facebook/create-react-app)

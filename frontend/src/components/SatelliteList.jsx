@@ -24,8 +24,6 @@ function SatelliteList() {
     try {
       const response = await satelliteApi.getAllSatellites();
       setSatellites(response.data);
-      setMessage('');
-      setMessageType('');
     } catch (error) {
       setMessage(`Error: ${error.message}`);
       setMessageType('error');
@@ -42,7 +40,6 @@ function SatelliteList() {
       const response = await satelliteApi.loadBackupData();
       setMessage(response.data.message);
       setMessageType('success');
-      await new Promise(resolve => setTimeout(resolve, 2000));
       await loadSatellites();
     } catch (err) {
       setMessage(`Error: ${errorMessage(err)}`);
@@ -91,7 +88,6 @@ function SatelliteList() {
       const response = await satelliteApi.fetchSpaceTrackData();
       setMessage(response.data.message);
       setMessageType('success');
-      await new Promise(resolve => setTimeout(resolve, 5000));
       await loadSatellites();
     } catch (error) {
       setMessage(`Error: ${errorMessage(error)}`);

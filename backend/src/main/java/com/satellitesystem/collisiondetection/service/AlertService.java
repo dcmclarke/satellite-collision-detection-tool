@@ -6,15 +6,11 @@ import com.satellitesystem.collisiondetection.repository.AlertRepository;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.ArrayList;
 
 @Service
 public class AlertService {
 
     private final AlertRepository repository;
-
-    private final List<Alert>recentAlerts = new ArrayList<>();
-    private final int MAX_RECENT_ALERTS = 100;
 
     public AlertService(AlertRepository repository) {
         this.repository = repository;
@@ -34,23 +30,7 @@ public class AlertService {
     }
 
     public Alert saveAlert(Alert alert) {
-        //save to db
-        Alert saved = repository.save(alert);
-        //and add to in memory list for quick access
-        addToRecentAlerts(saved);
-
-        return saved;
-    }
-
-    private void addToRecentAlerts(Alert alert) {
-        recentAlerts.add(0, alert);
-        if (recentAlerts.size() > MAX_RECENT_ALERTS) {
-            recentAlerts.remove(recentAlerts.size() - 1);
-        }
-    }
-
-    public List<Alert> getInMemoryAlerts() {
-        return new ArrayList<>(recentAlerts);
+        return repository.save(alert);
     }
 
     public Alert acknowledgeAlert(Long id) {

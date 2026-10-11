@@ -1,5 +1,6 @@
 package com.satellitesystem.collisiondetection.controller;
 
+import com.satellitesystem.collisiondetection.exception.FetchTooSoonException;
 import com.satellitesystem.collisiondetection.exception.ResourceNotFoundException;
 import com.satellitesystem.collisiondetection.exception.SpaceTrackException;
 import com.satellitesystem.collisiondetection.service.CollisionDetectionService;
@@ -11,16 +12,19 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.Duration;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 //loads only the web layer (controller + GlobalExceptionHandler) with mocked services, so no database is needed
-@WebMvcTest(SatelliteController.class)
+//manual refresh is switched on here; SatelliteControllerRefreshDisabledTest covers it being off
+@WebMvcTest(controllers = SatelliteController.class, properties = "app.manual-data-refresh.enabled=true")
 class SatelliteControllerTest {
 
     @Autowired
@@ -52,6 +56,16 @@ class SatelliteControllerTest {
         mockMvc.perform(post("/api/satellites/fetch-spacetrack-data"))
                 .andExpect(status().isBadGateway())
                 .andExpect(jsonPath("$.message").value("Space-Track login failed - check the configured username and password"));
+    }
+
+    @Test
+    void fetchSpaceTrackData_TooSoon_Returns429WithRetryAfter() throws Exception {
+        when(spaceTrackApiService.fetchAndStoreSatellites()).thenThrow(new FetchTooSoonException(Duration.ofMinutes(40)));
+
+        mockMvc.perform(post("/api/satellites/fetch-spacetrack-data"))
+                .andExpect(status().isTooManyRequests())
+                .andExpect(header().string("Retry-After", "2400"))
+                .andExpect(jsonPath("$.message").exists());
     }
 
     @Test
