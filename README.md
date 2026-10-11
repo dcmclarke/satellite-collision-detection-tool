@@ -52,7 +52,7 @@ The hosted deployment is currently offline while the project is being reworked, 
 
 **What it is today**
 
-- v1.0 was built as 12-week coursework and is preserved at the [`v1.0-coursework`](https://github.com/dcmclarke/satellite-collision-detection-tool/tree/v1.0-coursework) tag. Since then the backend has had a security and code-quality pass ([REVIEW.md](REVIEW.md), [IMPROVEMENTS.md](IMPROVEMENTS.md)).
+- v1.0 was built as 12-week coursework and is preserved at the [`v1.0-coursework`](https://github.com/dcmclarke/satellite-collision-detection-tool/tree/v1.0-coursework) tag. v1.1 is a security, reliability and code-quality pass; see the [CHANGELOG](CHANGELOG.md).
 - It is an **educational demo**, not an operational conjunction-assessment tool.
 - **What's real:**
   - live orbital data from Space-Track.org, with fetches limited to once an hour to respect Space-Track's usage rules, and an optional scheduled refresh
@@ -61,7 +61,7 @@ The hosted deployment is currently offline while the project is being reworked, 
 - **Known issue:** the screening doesn't propagate orbits yet. It compares orbital *elements* as if they were positions: inclination is stored as latitude, right ascension of the ascending node as longitude, and mean motion × 100 as altitude. The computed distances are therefore illustrative only and don't reflect real separations.
 - The "probability" shown for each warning is a fixed score per risk tier, not a calculated collision probability. A real probability needs position uncertainty (covariance), which public TLE data doesn't include.
 
-**Roadmap** (the full plan, with the reasoning, is in [IMPROVEMENTS.md](IMPROVEMENTS.md))
+**Roadmap**
 
 1. ✅ Security and reliability: no public destructive endpoints, transactional detection, rate-limited Space-Track access, CI for backend and frontend
 2. 🚧 Real orbit propagation with [Orekit](https://www.orekit.org/)'s SGP4. The propagator exists and matches the published SGP4 verification case to within 1 m, but the screening doesn't use it yet.
