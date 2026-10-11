@@ -1,10 +1,9 @@
 name: Backend CI
 
+# every push to any branch is tested; pull requests show the result for their head commit
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
