@@ -36,12 +36,6 @@ public class AlertController {
         return AlertResponse.from(service.acknowledgeAlert(id));
     }
 
-    //get in memory alerts (for demo)
-    @GetMapping("/in-memory")
-    public List<AlertResponse> getInMemoryAlerts() {
-        return toResponses(service.getInMemoryAlerts());
-    }
-
     private List<AlertResponse> toResponses(List<Alert> alerts) {
         return alerts.stream().map(AlertResponse::from).toList();
     }
